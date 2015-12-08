@@ -30,7 +30,6 @@ public class GameController : MonoBehaviour {
     void Start () {
         Utilz.FillArea( gameBackGround, gameAreaView );
         Utilz.UpdateView( gameAreaModel, gameAreaView );
-		currentTetramino = Utilz.RotateTeramino( currentTetramino );
 		StartCoroutine( Step() );
 	}
 
@@ -40,9 +39,7 @@ public class GameController : MonoBehaviour {
 			tetraminoPosition.x += 1;
 			if( Utilz.TestTetramino( gameAreaModel, currentTetramino, tetraminoPosition ) == false )
 				break;
-			Utilz.PutTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
-			Utilz.UpdateView( gameAreaModel, gameAreaView );
-			Utilz.GetTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+			ShowTetro( gameAreaModel, currentTetramino, tetraminoPosition );
 		}
 	}
 
@@ -65,9 +62,7 @@ public class GameController : MonoBehaviour {
 		if( pressedRIGHT || pressedLEFT ) {
 			if( Utilz.TestTetramino( gameAreaModel, currentTetramino, tempPos ) ) {
 				tetraminoPosition = tempPos;
-				Utilz.PutTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
-				Utilz.UpdateView( gameAreaModel, gameAreaView );
-				Utilz.GetTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+				ShowTetro( gameAreaModel, currentTetramino, tetraminoPosition );
 			}
 		}
 
@@ -76,10 +71,16 @@ public class GameController : MonoBehaviour {
 			if( Utilz.TestTetramino( gameAreaModel, newTetramino, tetraminoPosition ) ) {
 				currentTetramino = newTetramino;
 			}
-			Utilz.PutTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
-			Utilz.UpdateView( gameAreaModel, gameAreaView );
-			Utilz.GetTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+			if( Utilz.TestTetramino( gameAreaModel, currentTetramino, tetraminoPosition ) ) {
+				ShowTetro( gameAreaModel, currentTetramino, tetraminoPosition );
+			}
+
 		}
-	
+	}
+
+	void ShowTetro( int[,] gameAreaModel, int[,] currentTetramino, Vector2 tetraminoPosition ) {
+		Utilz.PutTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+		Utilz.UpdateView( gameAreaModel, gameAreaView );
+		Utilz.GetTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
 	}
 }

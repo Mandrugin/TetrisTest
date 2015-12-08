@@ -78,12 +78,13 @@ public static class Utilz {
 	public static void PutTetramino( int[,] gameAreaModel, int[,] tetramino, Vector2 tetraminoPosition ) {
 		int tetraminoVertical = tetramino.GetLength( 0 );
 		int tetraminoHorizontal = tetramino.GetLength( 1 );
+		int gameAreaVertical = gameAreaModel.GetLength( 0 );
+		int gameAreaHorizontal = gameAreaModel.GetLength( 1 );
 		for( int i = (int)tetraminoPosition.x; i < (int)tetraminoPosition.x + tetraminoVertical; ++ i ) {
 			for( int j = (int)tetraminoPosition.y; j < (int)tetraminoPosition.y + tetraminoHorizontal; ++ j ) {
-				if( i > gameAreaModel.GetLength( 0 ) - 1 || j > gameAreaModel.GetLength( 1 ) - 1 )
-					continue;
+				bool outOfRange = i < 0 || j < 0 || i >= gameAreaVertical || j >= gameAreaHorizontal;
 
-				if( tetramino[ i - (int)tetraminoPosition.x, j - (int)tetraminoPosition.y ] == GameController.FREE_ELEMENT ) {
+				if( tetramino[ i - (int)tetraminoPosition.x, j - (int)tetraminoPosition.y ] == GameController.FREE_ELEMENT && !outOfRange ) {
 					gameAreaModel[i, j] = GameController.FREE_ELEMENT;
 				}
 			}
