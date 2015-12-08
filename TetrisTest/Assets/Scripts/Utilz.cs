@@ -27,12 +27,78 @@ public static class Utilz {
         }
     }
 
-    public static bool IsBottom( int[,] gameAreaView, int horizontal, int vertical, int additionalField ) {
+    public static bool IsBottom( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
         for( int i = 0; i < vertical + additionalField; ++i ) {
             for( int j = 0; j < horizontal; ++j ) {
-                // ...
+				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
+					if( i == 0 )
+						return true;
+					if( gameAreaModel[i - 1, j] == GameController.FIXED_ELEMENT )
+						return true;
+				}
             }
         }
         return false;
     }
+
+	public static bool IsRight( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
+		for( int i = 0; i < vertical + additionalField; ++i ) {
+			for( int j = 0; j < horizontal; ++j ) {
+				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
+					if( j == horizontal - 1 )
+						return true;
+					if( gameAreaModel[i, j + 1] == GameController.FIXED_ELEMENT )
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static bool IsLeft( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
+		for( int i = 0; i < vertical + additionalField; ++i ) {
+			for( int j = 0; j < horizontal; ++j ) {
+				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
+					if( j == 0 )
+						return true;
+					if( gameAreaModel[i, j - 1] == GameController.FIXED_ELEMENT )
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static void PullDown( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
+		for( int i = 0; i < vertical + additionalField; ++i ) {
+			for( int j = 0; j < horizontal; ++j ) {
+				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
+					gameAreaModel[i - 1, j] = GameController.FREE_ELEMENT;
+					gameAreaModel[i, j] = GameController.EMPTY_ELEMENT;
+				}
+			}
+		}
+	}
+
+	public static void PullLeft( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
+		for( int i = 0; i < vertical + additionalField; ++i ) {
+			for( int j = 0; j < horizontal; ++j ) {
+				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
+					gameAreaModel[i, j - 1] = GameController.FREE_ELEMENT;
+					gameAreaModel[i, j] = GameController.EMPTY_ELEMENT;
+				}
+			}
+		}
+	}
+
+	public static void PullRight( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
+		for( int i = vertical + additionalField - 1; i >= 0; --i ) {
+			for( int j = horizontal - 1; j >= 0; --j ) {
+				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
+					gameAreaModel[i, j + 1] = GameController.FREE_ELEMENT;
+					gameAreaModel[i, j] = GameController.EMPTY_ELEMENT;
+				}
+			}
+		}
+	}
 }

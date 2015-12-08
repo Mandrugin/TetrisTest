@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GameController : MonoBehaviour {
 
@@ -11,6 +12,11 @@ public class GameController : MonoBehaviour {
     public const int FREE_ELEMENT = 1;
     public const int FIXED_ELEMENT = 2;
 
+	private bool pressedUP = false;
+	private bool pressedDOWN = false;
+	private bool pressedLEFT = false;
+	private bool pressedRIGHT = false;
+
     public RectTransform gameBackGround;
 
     private int[,] gameAreaModel = new int[VERTICAL_SIZE + ADDITIONAL_FIELD, HORIZONTAL_SIZE];
@@ -19,5 +25,43 @@ public class GameController : MonoBehaviour {
     void Start () {
         Utilz.FillArea( gameBackGround, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
         Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+		gameAreaModel[20, 8] = FREE_ELEMENT;
+		gameAreaModel[19, 8] = FREE_ELEMENT;
+		gameAreaModel[18, 8] = FREE_ELEMENT;
+		gameAreaModel[19, 9] = FREE_ELEMENT;
+		StartCoroutine( Step() );
+	}
+
+	IEnumerator Step() {
+		while( true ) {
+			yield return new WaitForSeconds( 0.5f );
+			if( Utilz.IsBottom( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD ) ) {
+				Debug.Log( "bottom" );
+				break;
+			}
+			Utilz.PullDown( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+			Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+		}
+	}
+
+	void Update() {
+		pressedUP = Input.GetKeyDown( KeyCode.UpArrow );
+		pressedDOWN = Input.GetKeyDown( KeyCode.DownArrow );
+		pressedLEFT = Input.GetKeyDown( KeyCode.LeftArrow );
+		pressedRIGHT = Input.GetKeyDown( KeyCode.RightArrow );
+
+		if( pressedLEFT ) {
+			if( !Utilz.IsLeft( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD ) ) {
+				Utilz.PullLeft( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+				Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+			}
+		}
+
+		if( pressedRIGHT ) {
+			if( !Utilz.IsRight( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD ) ) {
+				Utilz.PullRight( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+				Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+			}
+		}
 	}
 }
