@@ -25,7 +25,8 @@ public class GameController : MonoBehaviour {
     void Start () {
         Utilz.FillArea( gameBackGround, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
         Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
-		var currentTeramino = Utilz.Teramino5;
+		int[,] currentTeramino = Utilz.Teramino7;
+		currentTeramino = Utilz.RotateTeramino( currentTeramino );
 
 		for( int i = 0; i < currentTeramino.GetLength(0); ++i ) {
 			for( int j = 0; j < currentTeramino.GetLength(0); ++j ) {

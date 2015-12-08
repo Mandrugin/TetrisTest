@@ -146,7 +146,29 @@ public static class Utilz {
 		}
 	}
 
-	public static void RotateTeramino( int[,] teramino ) {
+	public static int[,] RotateTeramino( int[,] teramino ) {
+		int[,] newTeramino = new int[teramino.GetLength( 0 ),teramino.GetLength( 1 )];
 
+		newTeramino[0, 0] = teramino[0, 0];
+		newTeramino[0, 1] = teramino[1, 0];
+		newTeramino[0, 2] = teramino[2, 0];
+		newTeramino[0, 3] = teramino[3, 0];
+
+		newTeramino[1, 0] = teramino[0, 1];
+		newTeramino[1, 1] = teramino[1, 1];
+		newTeramino[1, 2] = teramino[2, 1];
+		newTeramino[1, 3] = teramino[3, 1];
+
+		newTeramino[2, 0] = teramino[0, 2];
+		newTeramino[2, 1] = teramino[1, 2];
+		newTeramino[2, 2] = teramino[2, 2];
+		newTeramino[2, 3] = teramino[3, 2];
+
+		newTeramino[3, 0] = teramino[0, 3];
+		newTeramino[3, 1] = teramino[1, 3];
+		newTeramino[3, 2] = teramino[2, 3];
+		newTeramino[3, 3] = teramino[3, 3];
+
+		return newTeramino;
 	}
 }
