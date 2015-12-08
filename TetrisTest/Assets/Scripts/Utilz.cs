@@ -71,23 +71,27 @@ public static class Utilz {
         }
     }
 
-    public static bool IsBottom( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
-        for( int i = 0; i < vertical + additionalField; ++i ) {
-            for( int j = 0; j < horizontal; ++j ) {
+    public static bool IsBottom( int[,] gameAreaModel, int[,] tetramino, Vector2 tetraminoPosition ) {
+		int tetraminoSize = tetramino.GetLength( 0 );
+		for( int i = tetraminoPosition.x; i < tetraminoPosition.x + tetraminoSize; ++i ) {
+			for( int j = tetraminoPosition.y; j < tetraminoPosition.y + tetraminoSize; ++j ) {
 				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
 					if( i == 0 )
 						return true;
 					if( gameAreaModel[i - 1, j] == GameController.FIXED_ELEMENT )
 						return true;
 				}
-            }
-        }
+			}
+		}
+
         return false;
     }
 
-	public static bool IsRight( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
-		for( int i = 0; i < vertical + additionalField; ++i ) {
-			for( int j = 0; j < horizontal; ++j ) {
+	public static bool IsRight( int[,] gameAreaModel,  int[,] tetramino, Vector2 tetraminoPosition ) {
+		int tetraminoSize = tetramino.GetLength( 0 );
+		int horizontal = gameAreaModel.GetLength(1);
+		for( int i = tetraminoPosition.x; i < tetraminoPosition.x + tetraminoSize; ++i ) {
+			for( int j = tetraminoPosition.y; j < tetraminoPosition.y + tetraminoSize; ++j ) {
 				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
 					if( j == horizontal - 1 )
 						return true;
@@ -113,12 +117,14 @@ public static class Utilz {
 		return false;
 	}
 
-	public static void PullDown( int[,] gameAreaModel, int horizontal, int vertical, int additionalField ) {
-		for( int i = 0; i < vertical + additionalField; ++i ) {
-			for( int j = 0; j < horizontal; ++j ) {
-				if( gameAreaModel[i, j] == GameController.FREE_ELEMENT ) {
-					gameAreaModel[i - 1, j] = GameController.FREE_ELEMENT;
-					gameAreaModel[i, j] = GameController.EMPTY_ELEMENT;
+	public static void PullDown( int[,] gameAreaModel, int[,] tetramino, out Vector2 tetraminoPosition ) {
+		int tetraminoSize = tetramino.GetLength( 0 );
+		for( int i = tetraminoPosition.x; i < tetraminoPosition.x + tetraminoSize; ++i ) {
+			for( int j = tetraminoPosition.y; j < tetraminoPosition.y + tetraminoSize; ++j ) {
+				int x = i - tetraminoPosition.x;
+				int y = tetraminoSize - j - tetraminoPosition.y;
+				if( tetramino[x, y] == GameController.FREE_ELEMENT ) {
+					// ...
 				}
 			}
 		}

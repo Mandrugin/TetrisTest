@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour {
     private int[,] gameAreaModel = new int[VERTICAL_SIZE + ADDITIONAL_FIELD, HORIZONTAL_SIZE];
     private Image[,] gameAreaView = new Image[VERTICAL_SIZE + ADDITIONAL_FIELD, HORIZONTAL_SIZE];
 
+	Vector2 tetraminoPosition = new Vector2();
+
     void Start () {
         Utilz.FillArea( gameBackGround, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
         Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
