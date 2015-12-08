@@ -4,43 +4,43 @@ using UnityEngine.UI;
 public static class Utilz {
 
 #region Teraminos
-	public int[,] Teramino1 = { 
+	public static int[,] Teramino1 = { 
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 } };
 
-	public int[,] Teramino2 = {
+	public static int[,] Teramino2 = {
 		{ 0, 0, 0, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public int[,] Teramino3 = {
+	public static int[,] Teramino3 = {
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public int[,] Teramino4 = {
+	public static int[,] Teramino4 = {
 		{ 0, 0, 1, 0 },
 		{ 0, 0, 1, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public int[,] Teramino5 = {
+	public static int[,] Teramino5 = {
 		{ 0, 0, 1, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public int[,] Teramino6 = {
+	public static int[,] Teramino6 = {
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 1, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public int[,] Teramino7 = {
+	public static int[,] Teramino7 = {
 		{ 0, 0, 1, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 1, 0 },
@@ -144,5 +144,9 @@ public static class Utilz {
 				}
 			}
 		}
+	}
+
+	public static void RotateTeramino( int[,] teramino ) {
+
 	}
 }

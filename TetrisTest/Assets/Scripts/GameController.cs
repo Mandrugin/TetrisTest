@@ -25,10 +25,13 @@ public class GameController : MonoBehaviour {
     void Start () {
         Utilz.FillArea( gameBackGround, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
         Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
-		gameAreaModel[20, 8] = FREE_ELEMENT;
-		gameAreaModel[19, 8] = FREE_ELEMENT;
-		gameAreaModel[18, 8] = FREE_ELEMENT;
-		gameAreaModel[19, 9] = FREE_ELEMENT;
+		var currentTeramino = Utilz.Teramino5;
+
+		for( int i = 0; i < currentTeramino.GetLength(0); ++i ) {
+			for( int j = 0; j < currentTeramino.GetLength(0); ++j ) {
+				gameAreaModel[VERTICAL_SIZE + ADDITIONAL_FIELD - 1 - i, HORIZONTAL_SIZE / 2 + j] = currentTeramino[i, j];
+			}
+		}
 		StartCoroutine( Step() );
 	}
 
