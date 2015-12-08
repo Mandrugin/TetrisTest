@@ -24,29 +24,25 @@ public class GameController : MonoBehaviour {
 
 	Vector2 tetraminoPosition = new Vector2();
 
-    void Start () {
-        Utilz.FillArea( gameBackGround, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
-        Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
-		int[,] currentTeramino = Utilz.Tetramino7;
-		currentTeramino = Utilz.RotateTeramino( currentTeramino );
+	int[,] currentTetramino = Utilz.Tetramino7;
+	int[,] nextTetramino;
 
-		for( int i = 0; i < currentTeramino.GetLength(0); ++i ) {
-			for( int j = 0; j < currentTeramino.GetLength(0); ++j ) {
-				gameAreaModel[VERTICAL_SIZE + ADDITIONAL_FIELD - 1 - i, HORIZONTAL_SIZE / 2 + j] = currentTeramino[i, j];
-			}
-		}
+    void Start () {
+        Utilz.FillArea( gameBackGround, gameAreaView );
+        Utilz.UpdateView( gameAreaModel, gameAreaView );
+		currentTetramino = Utilz.RotateTeramino( currentTetramino );
 		StartCoroutine( Step() );
 	}
 
 	IEnumerator Step() {
 		while( true ) {
 			yield return new WaitForSeconds( 0.5f );
-			if( Utilz.IsBottom( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD ) ) {
-				Debug.Log( "bottom" );
+			tetraminoPosition.x += 1;
+			if( Utilz.TestTetramino( gameAreaModel, currentTetramino, tetraminoPosition ) == false )
 				break;
-			}
-			Utilz.PullDown( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
-			Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+			Utilz.PutTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+			Utilz.UpdateView( gameAreaModel, gameAreaView );
+			Utilz.GetTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
 		}
 	}
 
@@ -56,18 +52,34 @@ public class GameController : MonoBehaviour {
 		pressedLEFT = Input.GetKeyDown( KeyCode.LeftArrow );
 		pressedRIGHT = Input.GetKeyDown( KeyCode.RightArrow );
 
+		Vector2 tempPos = tetraminoPosition;
+
 		if( pressedLEFT ) {
-			if( !Utilz.IsLeft( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD ) ) {
-				Utilz.PullLeft( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
-				Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
-			}
+			tempPos.y -= 1;
 		}
 
 		if( pressedRIGHT ) {
-			if( !Utilz.IsRight( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD ) ) {
-				Utilz.PullRight( gameAreaModel, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
-				Utilz.UpdateView( gameAreaModel, gameAreaView, HORIZONTAL_SIZE, VERTICAL_SIZE, ADDITIONAL_FIELD );
+			tempPos.y += 1;
+		}
+
+		if( pressedRIGHT || pressedLEFT ) {
+			if( Utilz.TestTetramino( gameAreaModel, currentTetramino, tempPos ) ) {
+				tetraminoPosition = tempPos;
+				Utilz.PutTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+				Utilz.UpdateView( gameAreaModel, gameAreaView );
+				Utilz.GetTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
 			}
 		}
+
+		if( pressedUP ) {
+			var newTetramino = Utilz.RotateTeramino( currentTetramino );
+			if( Utilz.TestTetramino( gameAreaModel, newTetramino, tetraminoPosition ) ) {
+				currentTetramino = newTetramino;
+			}
+			Utilz.PutTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+			Utilz.UpdateView( gameAreaModel, gameAreaView );
+			Utilz.GetTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+		}
+	
 	}
 }
