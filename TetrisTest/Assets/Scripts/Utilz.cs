@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public static class Utilz {
 
@@ -10,41 +11,36 @@ public static class Utilz {
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 } };
 
-	public static int[,] Teramino2 = {
-		{ 0, 0, 0, 0 },
-		{ 0, 1, 1, 0 },
-		{ 0, 1, 1, 0 },
-		{ 0, 0, 0, 0 } };
+	public static int[,] Tetramino2 = {
+		{ 1, 1 },
+		{ 1, 1 } };
 
 	public static int[,] Tetramino3 = {
-		{ 0, 1, 0, 0 },
-		{ 0, 1, 0, 0 },
-		{ 0, 1, 1, 0 },
-		{ 0, 0, 0, 0 } };
+		{ 0, 1, 0 },
+		{ 0, 1, 0 },
+		{ 0, 1, 1 } };
 
 	public static int[,] Tetramino4 = {
-		{ 0, 0, 1, 0 },
-		{ 0, 0, 1, 0 },
-		{ 0, 1, 1, 0 },
-		{ 0, 0, 0, 0 } };
+		{ 0, 1, 0 },
+		{ 0, 1, 0 },
+		{ 1, 1, 0 } };
 
 	public static int[,] Tetramino5 = {
-		{ 0, 0, 1, 0 },
-		{ 0, 1, 1, 0 },
-		{ 0, 1, 0, 0 },
-		{ 0, 0, 0, 0 } };
+		{ 0, 1, 0 },
+		{ 1, 1, 0 },
+		{ 1, 0, 0 } };
 
 	public static int[,] Tetramino6 = {
-		{ 0, 1, 0, 0 },
-		{ 0, 1, 1, 0 },
-		{ 0, 0, 1, 0 },
-		{ 0, 0, 0, 0 } };
+		{ 1, 0, 0 },
+		{ 1, 1, 0 },
+		{ 0, 1, 0 } };
 
 	public static int[,] Tetramino7 = {
-		{ 0, 0, 1, 0 },
-		{ 0, 1, 1, 0 },
-		{ 0, 0, 1, 0 },
-		{ 0, 0, 0, 0 } };
+		{ 0, 1, 0 },
+		{ 1, 1, 0 },
+		{ 0, 1, 0 } };
+
+	public static List<int[,]> Tetraminos = new List<int[,]> { Tetramino1, Tetramino2, Tetramino3, Tetramino4, Tetramino5, Tetramino6, Tetramino7 };
 #endregion
 
     public static void FillArea( RectTransform rect, Image[,] gameAreaView ) {
@@ -125,30 +121,54 @@ public static class Utilz {
 		return true;
 	}
 
+	public static int CheckLines( int[,] gameAreaModel ) {
+		int vertical = gameAreaModel.GetLength( 0 );
+		int horizontal = gameAreaModel.GetLength( 1 );
 
+		for( int i = 0; i < vertical; ++i ) {
+			bool fullLine = true;
+			for( int j = 0; j < horizontal; ++j ) {
+				if( gameAreaModel[i, j] == GameController.EMPTY_ELEMENT ) {
+					fullLine = false;
+					break;
+				}
+			}
+			if( fullLine ) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	public static void RemoveLine( int[,] gameAreaModel, int lineNumber ) {
+		int horizontal = gameAreaModel.GetLength( 1 );
+
+		for( int i = lineNumber; i > 0; --i ) {
+			for( int j = 0; j < horizontal; ++j ) {
+				gameAreaModel[i, j] = gameAreaModel[i - 1, j];
+			}
+		}
+	}
+
+	public static void RemoveLines( int[,] gameAreaModel ) {
+		int fullLine = CheckLines( gameAreaModel );
+		while( fullLine  > -1 ) {
+			RemoveLine( gameAreaModel, fullLine );
+			fullLine = CheckLines( gameAreaModel );
+		}
+	}
 
 	public static int[,] RotateTeramino( int[,] teramino ) {
-		int[,] newTeramino = new int[teramino.GetLength( 0 ),teramino.GetLength( 1 )];
+		int vertical = teramino.GetLength( 0 );
+		int horizontal = teramino.GetLength( 1 );
+		int[,] newTeramino = new int[vertical, horizontal];
 
-		newTeramino[0, 0] = teramino[3, 0];
-		newTeramino[0, 1] = teramino[2, 0];
-		newTeramino[0, 2] = teramino[1, 0];
-		newTeramino[0, 3] = teramino[0, 0];
-
-		newTeramino[1, 0] = teramino[3, 1];
-		newTeramino[1, 1] = teramino[2, 1];
-		newTeramino[1, 2] = teramino[1, 1];
-		newTeramino[1, 3] = teramino[0, 1];
-
-		newTeramino[2, 0] = teramino[3, 2];
-		newTeramino[2, 1] = teramino[2, 2];
-		newTeramino[2, 2] = teramino[1, 2];
-		newTeramino[2, 3] = teramino[0, 2];
-
-		newTeramino[3, 0] = teramino[3, 3];
-		newTeramino[3, 1] = teramino[2, 3];
-		newTeramino[3, 2] = teramino[1, 3];
-		newTeramino[3, 3] = teramino[0, 3];
+		for( int i = 0; i < vertical; ++i ) {
+			for( int j = 0; j < horizontal; ++j ) {
+				newTeramino[i, j] = teramino[vertical - j - 1, i];
+			}
+		}
 
 		return newTeramino;
 	}

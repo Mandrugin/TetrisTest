@@ -24,10 +24,13 @@ public class GameController : MonoBehaviour {
 
 	Vector2 tetraminoPosition = new Vector2();
 
-	int[,] currentTetramino = Utilz.Tetramino7;
+	int[,] currentTetramino;
 	int[,] nextTetramino;
 
     void Start () {
+		currentTetramino = Utilz.Tetraminos[Random.Range( 0, Utilz.Tetraminos.Count )];
+		nextTetramino = Utilz.Tetraminos[Random.Range( 0, Utilz.Tetraminos.Count )];
+
         Utilz.FillArea( gameBackGround, gameAreaView );
         Utilz.UpdateView( gameAreaModel, gameAreaView );
 		StartCoroutine( Step() );
@@ -35,10 +38,17 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator Step() {
 		while( true ) {
-			yield return new WaitForSeconds( 0.5f );
+			yield return new WaitForSeconds( 0.2f );
 			tetraminoPosition.x += 1;
-			if( Utilz.TestTetramino( gameAreaModel, currentTetramino, tetraminoPosition ) == false )
-				break;
+			if( Utilz.TestTetramino( gameAreaModel, currentTetramino, tetraminoPosition ) == false ) {
+				tetraminoPosition.x -= 1;
+				Utilz.PutTetramino( gameAreaModel, currentTetramino, tetraminoPosition );
+				currentTetramino = nextTetramino;
+				nextTetramino = Utilz.Tetraminos[Random.Range( 0, Utilz.Tetraminos.Count )];
+				tetraminoPosition = Vector2.zero;
+
+				Utilz.RemoveLines( gameAreaModel );
+			}
 			ShowTetro( gameAreaModel, currentTetramino, tetraminoPosition );
 		}
 	}
@@ -74,7 +84,13 @@ public class GameController : MonoBehaviour {
 			if( Utilz.TestTetramino( gameAreaModel, currentTetramino, tetraminoPosition ) ) {
 				ShowTetro( gameAreaModel, currentTetramino, tetraminoPosition );
 			}
+		}
 
+		if( pressedDOWN ) {
+			while( Utilz.TestTetramino( gameAreaModel, currentTetramino, tetraminoPosition ) ) {
+				tetraminoPosition.x += 1;
+			}
+			tetraminoPosition.x -= 1;
 		}
 	}
 
