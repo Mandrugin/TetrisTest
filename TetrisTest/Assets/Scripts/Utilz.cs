@@ -3,6 +3,50 @@ using UnityEngine.UI;
 
 public static class Utilz {
 
+#region Teraminos
+	public int[,] Teramino1 = { 
+		{ 0, 1, 0, 0 },
+		{ 0, 1, 0, 0 },
+		{ 0, 1, 0, 0 },
+		{ 0, 1, 0, 0 } };
+
+	public int[,] Teramino2 = {
+		{ 0, 0, 0, 0 },
+		{ 0, 1, 1, 0 },
+		{ 0, 1, 1, 0 },
+		{ 0, 0, 0, 0 } };
+
+	public int[,] Teramino3 = {
+		{ 0, 1, 0, 0 },
+		{ 0, 1, 0, 0 },
+		{ 0, 1, 1, 0 },
+		{ 0, 0, 0, 0 } };
+
+	public int[,] Teramino4 = {
+		{ 0, 0, 1, 0 },
+		{ 0, 0, 1, 0 },
+		{ 0, 1, 1, 0 },
+		{ 0, 0, 0, 0 } };
+
+	public int[,] Teramino5 = {
+		{ 0, 0, 1, 0 },
+		{ 0, 1, 1, 0 },
+		{ 0, 1, 0, 0 },
+		{ 0, 0, 0, 0 } };
+
+	public int[,] Teramino6 = {
+		{ 0, 1, 0, 0 },
+		{ 0, 1, 1, 0 },
+		{ 0, 0, 1, 0 },
+		{ 0, 0, 0, 0 } };
+
+	public int[,] Teramino7 = {
+		{ 0, 0, 1, 0 },
+		{ 0, 1, 1, 0 },
+		{ 0, 0, 1, 0 },
+		{ 0, 0, 0, 0 } };
+#endregion
+
     public static void FillArea( RectTransform rect, Image[,] gameAreaView, int horizontal, int vertical, int additionalField ) {
         float verticalSize = rect.rect.size.x / horizontal;
         float horizontalSize = rect.rect.size.x / horizontal;
