@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public static class Utilz {
 
-#region Teraminos
-	public static int[,] Teramino1 = { 
+#region Tetraminos
+	public static int[,] Tetramino1 = { 
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
@@ -16,31 +16,31 @@ public static class Utilz {
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public static int[,] Teramino3 = {
+	public static int[,] Tetramino3 = {
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public static int[,] Teramino4 = {
+	public static int[,] Tetramino4 = {
 		{ 0, 0, 1, 0 },
 		{ 0, 0, 1, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public static int[,] Teramino5 = {
+	public static int[,] Tetramino5 = {
 		{ 0, 0, 1, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public static int[,] Teramino6 = {
+	public static int[,] Tetramino6 = {
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 1, 0 },
 		{ 0, 0, 0, 0 } };
 
-	public static int[,] Teramino7 = {
+	public static int[,] Tetramino7 = {
 		{ 0, 0, 1, 0 },
 		{ 0, 1, 1, 0 },
 		{ 0, 0, 1, 0 },
