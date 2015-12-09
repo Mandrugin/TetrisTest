@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour {
 			if( gameAreaModel.TestTetramino( currentTetramino ) == false ) {
 				currentTetramino.posX -= 1;
 				if( currentTetramino.posX <= Tetramino.TETRAMINO_MAX_SIZE - 1 ) {
-					gameOverWindow.SetActive( true );
+					GameOver();
 					break;
 				}
 				gameAreaModel.PutTetramino( currentTetramino );
@@ -123,5 +123,9 @@ public class GameController : MonoBehaviour {
 		areaModel.PutTetramino( currentTetramino );
 		areaView.UpdateView( areaModel );
 		areaModel.GetTetramino( currentTetramino );
+	}
+
+	void GameOver() {
+		gameOverWindow.SetActive( true );
 	}
 }
