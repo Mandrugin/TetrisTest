@@ -22,11 +22,11 @@ public class FieldModel {
 	}
 
 	public void PutTetramino( Tetramino tetramino ) {
-		for( int i = (int)tetramino.posX; i < (int)tetramino.posX + tetramino.Vertical; ++ i ) {
-			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
+		for( int i = tetramino.posX; i < tetramino.posX + tetramino.Vertical; ++ i ) {
+			for( int j = tetramino.posY; j < tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= Vertical || j >= Horizontal;
 				
-				if( tetramino.Temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
+				if( tetramino.Temaplate[ i - tetramino.posX, j - tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
 					field[i, j] = GameController.FREE_ELEMENT;
 				}
 			}
@@ -34,10 +34,10 @@ public class FieldModel {
 	}
 	
 	public void GetTetramino( Tetramino tetramino ) {
-		for( int i = (int)tetramino.posX; i < (int)tetramino.posX + tetramino.Vertical; ++ i ) {
-			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
+		for( int i = tetramino.posX; i < tetramino.posX + tetramino.Vertical; ++ i ) {
+			for( int j = tetramino.posY; j < tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= Vertical || j >= Horizontal;
-				if( tetramino.Temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
+				if( tetramino.Temaplate[ i - tetramino.posX, j - tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
 					field[i, j] = GameController.EMPTY_ELEMENT;
 				}
 			}
@@ -45,10 +45,10 @@ public class FieldModel {
 	}
 	
 	public bool TestTetramino( Tetramino tetramino ) {
-		for( int i = (int)tetramino.posX; i < (int)tetramino.posX + tetramino.Vertical; ++ i ) {
-			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
+		for( int i = tetramino.posX; i < tetramino.posX + tetramino.Vertical; ++ i ) {
+			for( int j = tetramino.posY; j < tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= Vertical || j >= Horizontal;
-				if( tetramino.Temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT &&
+				if( tetramino.Temaplate[ i - tetramino.posX, j - tetramino.posY ] == GameController.FREE_ELEMENT &&
 				   ( outOfRange || field[i, j] != GameController.EMPTY_ELEMENT ) ) {
 					return false;
 				}

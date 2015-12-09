@@ -86,15 +86,15 @@ public class GameController : MonoBehaviour {
 
 		int tempPosY = currentTetramino.posY;
 
-		if( pressedLEFT && unlockControl ) {
+		if( pressedLEFT ) {
 			tempPosY -= 1;
 		}
 
-		if( pressedRIGHT && unlockControl ) {
+		if( pressedRIGHT ) {
 			tempPosY += 1;
 		}
 
-		if( pressedRIGHT || pressedLEFT ) {
+		if( ( pressedRIGHT || pressedLEFT)  && unlockControl ) {
 			int curPosY = currentTetramino.posY;
 			currentTetramino.posY = tempPosY;
 			if( gameAreaModel.TestTetramino( currentTetramino ) ) {
