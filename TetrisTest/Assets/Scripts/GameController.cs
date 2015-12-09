@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour {
 		ShowTetro( nextAreaModel, nextAreaView, nextTetramino );
 
 		gameAreaView.UpdateView( gameAreaModel );
+
+		currentTetramino.posY = gameAreaModel.Horizontal / 2 - currentTetramino.Horizontal / 2;
+
 		StartCoroutine( Step() );
 	}
 
@@ -54,6 +57,7 @@ public class GameController : MonoBehaviour {
 				currentTetramino = nextTetramino;
 				nextTetramino = new Tetramino( Vector2.zero );
 				gameAreaModel.RemoveLines();
+				currentTetramino.posY = gameAreaModel.Horizontal / 2 - currentTetramino.Horizontal / 2;
 				ShowTetro( nextAreaModel, nextAreaView, nextTetramino );
 			}
 			ShowTetro( gameAreaModel, gameAreaView, currentTetramino );
