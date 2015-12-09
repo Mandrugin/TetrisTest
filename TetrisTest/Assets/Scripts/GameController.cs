@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour {
 
     public const int EMPTY_ELEMENT = 0;
     public const int FREE_ELEMENT = 1;
-    public const int FIXED_ELEMENT = 2;
 
 	private bool pressedUP = false;
 	private bool pressedDOWN = false;
