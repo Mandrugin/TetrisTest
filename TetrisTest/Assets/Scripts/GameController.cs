@@ -15,6 +15,9 @@ public class GameController : MonoBehaviour {
 	private bool pressedLEFT = false;
 	private bool pressedRIGHT = false;
 
+	public GameObject gameOverWindow;
+	public Button ReturnToMenuButton;
+
     public RectTransform gameBackground;
 	public RectTransform nextBackground;
 
@@ -26,6 +29,10 @@ public class GameController : MonoBehaviour {
 
 	Tetramino currentTetramino;
 	Tetramino nextTetramino;
+
+	void Awake() {
+		ReturnToMenuButton.onClick.AddListener( () => { Application.LoadLevel( "start" ); } );
+	}
 
     void Start () {
 		currentTetramino = new Tetramino( Vector2.zero );
@@ -53,6 +60,10 @@ public class GameController : MonoBehaviour {
 			currentTetramino.posX += 1;
 			if( gameAreaModel.TestTetramino( currentTetramino ) == false ) {
 				currentTetramino.posX -= 1;
+				if( currentTetramino.posX <= Tetramino.TETRAMINO_MAX_SIZE - 1 ) {
+					gameOverWindow.SetActive( true );
+					break;
+				}
 				gameAreaModel.PutTetramino( currentTetramino );
 				currentTetramino = nextTetramino;
 				nextTetramino = new Tetramino( Vector2.zero );
