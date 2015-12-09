@@ -47,7 +47,7 @@ public class Tetramino {
 	public int posY;
 	public int Vertical { get{ return vertical; } }
 	public int Horizontal { get{ return horizontal; } }
-	public int[,] temaplate { get{ return template; } }
+	public int[,] Temaplate { get{ return template; } }
 
 	private int vertical;
 	private int horizontal;

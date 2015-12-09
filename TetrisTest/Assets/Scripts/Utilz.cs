@@ -39,7 +39,7 @@ public static class Utilz {
 			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= gameAreaVertical || j >= gameAreaHorizontal;
 
-				if( tetramino.temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
+				if( tetramino.Temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
 					gameAreaModel[i, j] = GameController.FREE_ELEMENT;
 				}
 			}
@@ -53,7 +53,7 @@ public static class Utilz {
 		for( int i = (int)tetramino.posX; i < (int)tetramino.posX + tetramino.Vertical; ++ i ) {
 			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= gameAreaVertical || j >= gameAreaHorizontal;
-				if( tetramino.temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
+				if( tetramino.Temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
 					gameAreaModel[i, j] = GameController.EMPTY_ELEMENT;
 				}
 			}
@@ -67,7 +67,7 @@ public static class Utilz {
 		for( int i = (int)tetramino.posX; i < (int)tetramino.posX + tetramino.Vertical; ++ i ) {
 			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= gameAreaVertical || j >= gameAreaHorizontal;
-				if( tetramino.temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT &&
+				if( tetramino.Temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT &&
 				    ( outOfRange || gameAreaModel[i, j] != GameController.EMPTY_ELEMENT ) ) {
 					return false;
 				}
