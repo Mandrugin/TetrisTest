@@ -4,45 +4,6 @@ using System.Collections.Generic;
 
 public static class Utilz {
 
-#region Tetraminos
-	public static int[,] Tetramino1 = { 
-		{ 0, 1, 0, 0 },
-		{ 0, 1, 0, 0 },
-		{ 0, 1, 0, 0 },
-		{ 0, 1, 0, 0 } };
-
-	public static int[,] Tetramino2 = {
-		{ 1, 1 },
-		{ 1, 1 } };
-
-	public static int[,] Tetramino3 = {
-		{ 0, 1, 0 },
-		{ 0, 1, 0 },
-		{ 0, 1, 1 } };
-
-	public static int[,] Tetramino4 = {
-		{ 0, 1, 0 },
-		{ 0, 1, 0 },
-		{ 1, 1, 0 } };
-
-	public static int[,] Tetramino5 = {
-		{ 0, 1, 0 },
-		{ 1, 1, 0 },
-		{ 1, 0, 0 } };
-
-	public static int[,] Tetramino6 = {
-		{ 1, 0, 0 },
-		{ 1, 1, 0 },
-		{ 0, 1, 0 } };
-
-	public static int[,] Tetramino7 = {
-		{ 0, 1, 0 },
-		{ 1, 1, 0 },
-		{ 0, 1, 0 } };
-
-	public static List<int[,]> Tetraminos = new List<int[,]> { Tetramino1, Tetramino2, Tetramino3, Tetramino4, Tetramino5, Tetramino6, Tetramino7 };
-#endregion
-
     public static void FillArea( RectTransform rect, Image[,] gameAreaView ) {
 		int vertical = gameAreaView.GetLength( 0 );
 		int horizontal = gameAreaView.GetLength( 1 );
@@ -71,48 +32,42 @@ public static class Utilz {
         }
     }
 
-	public static void PutTetramino( int[,] gameAreaModel, int[,] tetramino, Vector2 tetraminoPosition ) {
-		int tetraminoVertical = tetramino.GetLength( 0 );
-		int tetraminoHorizontal = tetramino.GetLength( 1 );
+	public static void PutTetramino( int[,] gameAreaModel, Tetramino tetramino ) {
 		int gameAreaVertical = gameAreaModel.GetLength( 0 );
 		int gameAreaHorizontal = gameAreaModel.GetLength( 1 );
-		for( int i = (int)tetraminoPosition.x; i < (int)tetraminoPosition.x + tetraminoVertical; ++ i ) {
-			for( int j = (int)tetraminoPosition.y; j < (int)tetraminoPosition.y + tetraminoHorizontal; ++ j ) {
+		for( int i = (int)tetramino.posX; i < (int)tetramino.posX + tetramino.Vertical; ++ i ) {
+			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= gameAreaVertical || j >= gameAreaHorizontal;
 
-				if( tetramino[ i - (int)tetraminoPosition.x, j - (int)tetraminoPosition.y ] == GameController.FREE_ELEMENT && !outOfRange ) {
+				if( tetramino.temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
 					gameAreaModel[i, j] = GameController.FREE_ELEMENT;
 				}
 			}
 		}
 	}
 
-	public static void GetTetramino( int[,] gameAreaModel, int[,] tetramino, Vector2 tetraminoPosition ) {
-		int tetraminoVertical = tetramino.GetLength( 0 );
-		int tetraminoHorizontal = tetramino.GetLength( 1 );
+	public static void GetTetramino( int[,] gameAreaModel, Tetramino tetramino ) {
 		int gameAreaVertical = gameAreaModel.GetLength( 0 );
 		int gameAreaHorizontal = gameAreaModel.GetLength( 1 );
 
-		for( int i = (int)tetraminoPosition.x; i < (int)tetraminoPosition.x + tetraminoVertical; ++ i ) {
-			for( int j = (int)tetraminoPosition.y; j < (int)tetraminoPosition.y + tetraminoHorizontal; ++ j ) {
+		for( int i = (int)tetramino.posX; i < (int)tetramino.posX + tetramino.Vertical; ++ i ) {
+			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= gameAreaVertical || j >= gameAreaHorizontal;
-				if( tetramino[ i - (int)tetraminoPosition.x, j - (int)tetraminoPosition.y ] == GameController.FREE_ELEMENT && !outOfRange ) {
+				if( tetramino.temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT && !outOfRange ) {
 					gameAreaModel[i, j] = GameController.EMPTY_ELEMENT;
 				}
 			}
 		}
 	}
 
-	public static bool TestTetramino( int[,] gameAreaModel, int[,] tetramino, Vector2 tetraminoPosition ) {
-		int tetraminoVertical = tetramino.GetLength( 0 );
-		int tetraminoHorizontal = tetramino.GetLength( 1 );
+	public static bool TestTetramino( int[,] gameAreaModel, Tetramino tetramino ) {
 		int gameAreaVertical = gameAreaModel.GetLength( 0 );
 		int gameAreaHorizontal = gameAreaModel.GetLength( 1 );
 
-		for( int i = (int)tetraminoPosition.x; i < (int)tetraminoPosition.x + tetraminoVertical; ++ i ) {
-			for( int j = (int)tetraminoPosition.y; j < (int)tetraminoPosition.y + tetraminoHorizontal; ++ j ) {
+		for( int i = (int)tetramino.posX; i < (int)tetramino.posX + tetramino.Vertical; ++ i ) {
+			for( int j = (int)tetramino.posY; j < (int)tetramino.posY + tetramino.Horizontal; ++ j ) {
 				bool outOfRange = i < 0 || j < 0 || i >= gameAreaVertical || j >= gameAreaHorizontal;
-				if( tetramino[ i - (int)tetraminoPosition.x, j - (int)tetraminoPosition.y ] == GameController.FREE_ELEMENT &&
+				if( tetramino.temaplate[ i - (int)tetramino.posX, j - (int)tetramino.posY ] == GameController.FREE_ELEMENT &&
 				    ( outOfRange || gameAreaModel[i, j] != GameController.EMPTY_ELEMENT ) ) {
 					return false;
 				}
@@ -157,19 +112,5 @@ public static class Utilz {
 			RemoveLine( gameAreaModel, fullLine );
 			fullLine = CheckLines( gameAreaModel );
 		}
-	}
-
-	public static int[,] RotateTeramino( int[,] teramino ) {
-		int vertical = teramino.GetLength( 0 );
-		int horizontal = teramino.GetLength( 1 );
-		int[,] newTeramino = new int[vertical, horizontal];
-
-		for( int i = 0; i < vertical; ++i ) {
-			for( int j = 0; j < horizontal; ++j ) {
-				newTeramino[i, j] = teramino[vertical - j - 1, i];
-			}
-		}
-
-		return newTeramino;
 	}
 }

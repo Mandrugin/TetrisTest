@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Tetramino {
 
 	#region Tetramino templates
+	public const int TETRAMINO_MAX_SIZE = 4;
 	private static int[,] Tetramino1 = { 
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
@@ -42,7 +43,8 @@ public class Tetramino {
 	private static List<int[,]> Tetraminos = new List<int[,]> { Tetramino1, Tetramino2, Tetramino3, Tetramino4, Tetramino5, Tetramino6, Tetramino7 };
 	#endregion
 
-	public Vector2 position;
+	public int posX;
+	public int posY;
 	public int Vertical { get{ return vertical; } }
 	public int Horizontal { get{ return horizontal; } }
 	public int[,] temaplate { get{ return template; } }
@@ -65,6 +67,27 @@ public class Tetramino {
 
 		vertical = template.GetLength( 0 );
 		horizontal = template.GetLength( 1 );
-		this.position = position;
+		posX = (int)position.x;
+		posY = (int)position.y;
+	}
+
+	private Tetramino( int[,] template, Vector2 position ) {
+		this.template = template;
+		vertical = template.GetLength( 0 );
+		horizontal = template.GetLength( 1 );
+		posX = (int)position.x;
+		posY = (int)position.y;
+	}
+
+	public Tetramino RotateTeramino() {
+		int[,] newTemplate = new int[vertical, horizontal];
+		
+		for( int i = 0; i < vertical; ++i ) {
+			for( int j = 0; j < horizontal; ++j ) {
+				newTemplate[i, j] = template[vertical - j - 1, i];
+			}
+		}
+		
+		return new Tetramino( newTemplate, new Vector2( posX, posY ) );
 	}
 }
