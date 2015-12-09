@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
 	private bool pressedDOWN = false;
 	private bool pressedLEFT = false;
 	private bool pressedRIGHT = false;
+	private bool unlockControl = true;
 
 	public GameObject gameOverWindow;
 	public Button ReturnToMenuButton;
@@ -50,13 +51,14 @@ public class GameController : MonoBehaviour {
 		gameAreaView.UpdateView( gameAreaModel );
 
 		currentTetramino.posY = gameAreaModel.Horizontal / 2 - currentTetramino.Horizontal / 2;
+		currentTetramino.posX = Tetramino.TETRAMINO_MAX_SIZE - currentTetramino.Vertical;
 
 		StartCoroutine( Step() );
 	}
 
 	IEnumerator Step() {
 		while( true ) {
-			yield return new WaitForSeconds( 0.2f );
+			yield return new WaitForSeconds( 0.5f );
 			currentTetramino.posX += 1;
 			if( gameAreaModel.TestTetramino( currentTetramino ) == false ) {
 				currentTetramino.posX -= 1;
@@ -69,6 +71,7 @@ public class GameController : MonoBehaviour {
 				nextTetramino = new Tetramino( Vector2.zero );
 				gameAreaModel.RemoveLines();
 				currentTetramino.posY = gameAreaModel.Horizontal / 2 - currentTetramino.Horizontal / 2;
+				currentTetramino.posX = Tetramino.TETRAMINO_MAX_SIZE - currentTetramino.Vertical;
 				ShowTetro( nextAreaModel, nextAreaView, nextTetramino );
 			}
 			ShowTetro( gameAreaModel, gameAreaView, currentTetramino );
@@ -83,11 +86,11 @@ public class GameController : MonoBehaviour {
 
 		int tempPosY = currentTetramino.posY;
 
-		if( pressedLEFT ) {
+		if( pressedLEFT && unlockControl ) {
 			tempPosY -= 1;
 		}
 
-		if( pressedRIGHT ) {
+		if( pressedRIGHT && unlockControl ) {
 			tempPosY += 1;
 		}
 
@@ -101,7 +104,7 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
-		if( pressedUP ) {
+		if( pressedUP && unlockControl ) {
 			var newTetramino = currentTetramino.RotateTeramino();
 			if( gameAreaModel.TestTetramino( newTetramino ) ) {
 				currentTetramino = newTetramino;
@@ -111,7 +114,7 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
-		if( pressedDOWN ) {
+		if( pressedDOWN && unlockControl ) {
 			while( gameAreaModel.TestTetramino( currentTetramino ) ) {
 				currentTetramino.posX += 1;
 			}
@@ -126,6 +129,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	void GameOver() {
+		unlockControl = false;
 		gameOverWindow.SetActive( true );
 	}
 }
