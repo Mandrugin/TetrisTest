@@ -17,8 +17,8 @@ public class GameController : MonoBehaviour {
 
     public RectTransform gameBackGround;
 
-	private FieldModel gameAreaModel = new FieldModel( VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE, HORIZONTAL_SIZE );
-	private Image[,] gameAreaView = new Image[VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE, HORIZONTAL_SIZE];
+	private FieldModel gameAreaModel;
+	private FieldView gameAreaView;
 
 	Tetramino currentTetramino;
 	Tetramino nextTetramino;
@@ -27,8 +27,10 @@ public class GameController : MonoBehaviour {
 		currentTetramino = new Tetramino( Vector2.zero );
 		nextTetramino = new Tetramino( Vector2.zero );
 
-        Utilz.FillArea( gameBackGround, gameAreaView );
-        Utilz.UpdateView( gameAreaModel, gameAreaView );
+		gameAreaModel = new FieldModel( VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE, HORIZONTAL_SIZE );
+		gameAreaView = new FieldView( gameBackGround, VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE, HORIZONTAL_SIZE );
+
+		gameAreaView.UpdateView( gameAreaModel );
 		StartCoroutine( Step() );
 	}
 
@@ -93,7 +95,7 @@ public class GameController : MonoBehaviour {
 
 	void ShowTetro( FieldModel gameAreaModel, Tetramino currentTetramino ) {
 		gameAreaModel.PutTetramino( currentTetramino );
-		Utilz.UpdateView( gameAreaModel, gameAreaView );
+		gameAreaView.UpdateView( gameAreaModel );
 		gameAreaModel.GetTetramino( currentTetramino );
 	}
 }
