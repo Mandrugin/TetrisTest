@@ -15,10 +15,14 @@ public class GameController : MonoBehaviour {
 	private bool pressedLEFT = false;
 	private bool pressedRIGHT = false;
 
-    public RectTransform gameBackGround;
+    public RectTransform gameBackground;
+	public RectTransform nextBackground;
 
 	private FieldModel gameAreaModel;
 	private FieldView gameAreaView;
+
+	private FieldModel nextAreaModel;
+	private FieldView nextAreaView;
 
 	Tetramino currentTetramino;
 	Tetramino nextTetramino;
@@ -28,7 +32,13 @@ public class GameController : MonoBehaviour {
 		nextTetramino = new Tetramino( Vector2.zero );
 
 		gameAreaModel = new FieldModel( VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE, HORIZONTAL_SIZE );
-		gameAreaView = new FieldView( gameBackGround, VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE, HORIZONTAL_SIZE );
+		gameAreaView = new FieldView( gameBackground, VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE, HORIZONTAL_SIZE );
+
+		nextAreaModel = new FieldModel( Tetramino.TETRAMINO_MAX_SIZE, Tetramino.TETRAMINO_MAX_SIZE );
+		nextAreaView = new FieldView( nextBackground, Tetramino.TETRAMINO_MAX_SIZE, Tetramino.TETRAMINO_MAX_SIZE );
+
+		nextAreaView.UpdateView( nextAreaModel );
+		ShowTetro( nextAreaModel, nextAreaView, nextTetramino );
 
 		gameAreaView.UpdateView( gameAreaModel );
 		StartCoroutine( Step() );
@@ -44,8 +54,9 @@ public class GameController : MonoBehaviour {
 				currentTetramino = nextTetramino;
 				nextTetramino = new Tetramino( Vector2.zero );
 				gameAreaModel.RemoveLines();
+				ShowTetro( nextAreaModel, nextAreaView, nextTetramino );
 			}
-			ShowTetro( gameAreaModel, currentTetramino );
+			ShowTetro( gameAreaModel, gameAreaView, currentTetramino );
 		}
 	}
 
@@ -69,7 +80,7 @@ public class GameController : MonoBehaviour {
 			int curPosY = currentTetramino.posY;
 			currentTetramino.posY = tempPosY;
 			if( gameAreaModel.TestTetramino( currentTetramino ) ) {
-				ShowTetro( gameAreaModel, currentTetramino );
+				ShowTetro( gameAreaModel, gameAreaView, currentTetramino );
 			} else {
 				currentTetramino.posY = curPosY;
 			}
@@ -81,7 +92,7 @@ public class GameController : MonoBehaviour {
 				currentTetramino = newTetramino;
 			}
 			if( gameAreaModel.TestTetramino( currentTetramino ) ) {
-				ShowTetro( gameAreaModel, currentTetramino );
+				ShowTetro( gameAreaModel, gameAreaView, currentTetramino );
 			}
 		}
 
@@ -93,9 +104,9 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	void ShowTetro( FieldModel gameAreaModel, Tetramino currentTetramino ) {
-		gameAreaModel.PutTetramino( currentTetramino );
-		gameAreaView.UpdateView( gameAreaModel );
-		gameAreaModel.GetTetramino( currentTetramino );
+	void ShowTetro( FieldModel areaModel, FieldView areaView, Tetramino currentTetramino ) {
+		areaModel.PutTetramino( currentTetramino );
+		areaView.UpdateView( areaModel );
+		areaModel.GetTetramino( currentTetramino );
 	}
 }
