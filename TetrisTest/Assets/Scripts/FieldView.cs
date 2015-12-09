@@ -20,15 +20,17 @@ public class FieldView {
 	private void Fill( RectTransform rect ) {
 		float verticalSize = rect.rect.size.y / vertical;
 		float horizontalSize = rect.rect.size.x / horizontal;
+		Sprite sprite = Resources.Load<Sprite>( "Brik" );
 		for( int i = 0; i < vertical; ++i ) {
 			for( int j = 0; j < horizontal; ++j ) {
 				GameObject go = new GameObject( "rect[" + i.ToString() + ", " + j.ToString() + "]", typeof(RectTransform), typeof(Image) );
 				RectTransform subRect = go.GetComponent<RectTransform>();
-				subRect.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, horizontalSize * 0.9f );
-				subRect.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, verticalSize * 0.9f );
-				subRect.SetParent( rect );
+				subRect.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, horizontalSize );
+				subRect.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, verticalSize );
+				subRect.SetParent( rect, false );
 				subRect.localPosition = new Vector3( j * verticalSize + verticalSize / 2.0f, -i * horizontalSize - horizontalSize / 2.0f, 0.0f );
 				field[i, j] = subRect.GetComponent<Image>();
+				field[i, j].sprite = sprite;
 			}
 		}
 	}
