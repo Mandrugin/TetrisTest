@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StartGame : MonoBehaviour {
 
@@ -7,7 +8,7 @@ public class StartGame : MonoBehaviour {
 	public Button ExitButton;
 
 	void Awake() {
-		StartButton.onClick.AddListener( () => { Application.LoadLevel( "main" ); } );
+		StartButton.onClick.AddListener( () => { SceneManager.LoadScene( "main" ); } );
 		ExitButton.onClick.AddListener( () => { Application.Quit(); } );
 	}
 }

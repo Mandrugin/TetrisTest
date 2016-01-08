@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameController : MonoBehaviour {
@@ -32,7 +33,7 @@ public class GameController : MonoBehaviour {
 	Tetramino nextTetramino;
 
 	void Awake() {
-		ReturnToMenuButton.onClick.AddListener( () => { Application.LoadLevel( "start" ); } );
+		ReturnToMenuButton.onClick.AddListener( () => { SceneManager.LoadScene( "start" ); } );
 	}
 
     void Start () {
