@@ -1,0 +1,16 @@
+﻿public class NotificationType
+{
+    // APPLICATION
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Startup
+    public const string APP_STARTUP_NOTE = "appStartupNotification";
+
+    // USER INPUT 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Left arrow pressed
+    public const string LEFT_ARROW_PRESSED = "LeftArrowDown";
+    // Right arrow pressed
+    public const string RIGHT_ARROW_PRESSED = "RightArrowDown";
+}
