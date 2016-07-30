@@ -6,11 +6,18 @@
     // Startup
     public const string APP_STARTUP_NOTE = "appStartupNotification";
 
-    // USER INPUT 
+    // Commands
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Left arrow pressed
-    public const string LEFT_ARROW_PRESSED = "LeftArrowDown";
-    // Right arrow pressed
-    public const string RIGHT_ARROW_PRESSED = "RightArrowDown";
+    // init game scene
+    public const string INIT_GAME_SCENE_NOTE = "InitGameSceneNote";
+    // deinit game scene
+    public const string DEINIT_GAME_SCENE_NOTE = "DeinitGameSceneNote";
+
+    // EVENTS
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // update field views
+    public const string GAME_FIELD_VIEW_UPDATE_NOTE = "gameFieldViewUpdateNote";
+    public const string NEXT_FIELD_VIEW_UPDATE_NOTE = "nextFieldViewUpdateNote";
 }

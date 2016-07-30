@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class FieldView {
+/// <summary>
+/// Класс отображающий игровое поле на экране
+/// </summary>
+public class FieldViewComponent : MonoBehaviour {
 
-	public Image[,] field;
+    public RectTransform rect;
+
+    private Image[,] viewField;
 	
 	private int vertical;
 	private int horizontal;
-	public int Vertical { get{ return vertical; } }
-	public int Horizontal { get{ return horizontal; } }
 
-	public FieldView( RectTransform rect, int verticalSize, int horizontalSize ) {
+	public void Init( int verticalSize, int horizontalSize ) {
 		vertical = verticalSize;
 		horizontal = horizontalSize;
-		field = new Image[vertical, horizontal];
-		Fill( rect );
+		viewField = new Image[vertical, horizontal];
+		Fill();
 	}
 
-	private void Fill( RectTransform rect ) {
+	private void Fill() {
 		float verticalSize = rect.rect.size.y / vertical;
 		float horizontalSize = rect.rect.size.x / horizontal;
 		Sprite sprite = Resources.Load<Sprite>( "Brik" );
@@ -29,16 +32,16 @@ public class FieldView {
 				subRect.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, verticalSize );
 				subRect.SetParent( rect, false );
 				subRect.localPosition = new Vector3( j * verticalSize + verticalSize / 2.0f, -i * horizontalSize - horizontalSize / 2.0f, 0.0f );
-				field[i, j] = subRect.GetComponent<Image>();
-				field[i, j].sprite = sprite;
+				viewField[i, j] = subRect.GetComponent<Image>();
+				viewField[i, j].sprite = sprite;
 			}
 		}
 	}
 
-	public void UpdateView( FieldModel gameAreaModel ) {
-		for( int i = 0; i < gameAreaModel.Vertical; ++i ) {
-			for( int j = 0; j < gameAreaModel.Horizontal; ++j ) {
-				field[i, j].enabled = ( gameAreaModel.field[i, j] != GameController.EMPTY_ELEMENT );
+	public void UpdateView( int[,] modelField ) {
+		for( int i = 0; i < vertical; ++i ) {
+			for( int j = 0; j < horizontal; ++j ) {
+				viewField[i, j].enabled = ( modelField[i, j] != ConstStorage.EMPTY_ELEMENT );
 			}
 		}
 	}

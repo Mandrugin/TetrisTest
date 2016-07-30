@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using PureMVC.Patterns;
 
+/// <summary>
+/// Класс представляющий понятие тетрамино
+/// </summary>
 public class Tetramino {
 
 	#region Tetramino templates
@@ -43,40 +47,39 @@ public class Tetramino {
 	private static List<int[,]> Tetraminos = new List<int[,]> { Tetramino1, Tetramino2, Tetramino3, Tetramino4, Tetramino5, Tetramino6, Tetramino7 };
 	#endregion
 
-	public int posX;
 	public int posY;
+	public int posX;
 	public int Vertical { get{ return vertical; } }
 	public int Horizontal { get{ return horizontal; } }
+    public int Number { get { return number; } }
 	public int[,] Temaplate { get{ return template; } }
 
 	private int vertical;
 	private int horizontal;
+    private int number;
 	private int[,] template;
-
-	private static int[,] GetRandomTemplate() {
-		return Tetraminos[Random.Range( 0, Tetraminos.Count )];
-	}
 
 	public Tetramino( Vector2 position, int tetraminoNumber = -1 ) {
 
 		if( tetraminoNumber > -1 && tetraminoNumber < Tetraminos.Count ) {
-			template = Tetraminos[tetraminoNumber];
+            number = tetraminoNumber;
 		} else {
-			template = GetRandomTemplate();
+            number = Random.Range(0, Tetraminos.Count);
 		}
 
-		vertical = template.GetLength( 0 );
+        template = Tetraminos[number];
+        vertical = template.GetLength( 0 );
 		horizontal = template.GetLength( 1 );
-		posX = (int)position.x;
-		posY = (int)position.y;
+		posY = (int)position.x;
+		posX = (int)position.y;
 	}
 
 	private Tetramino( int[,] template, Vector2 position ) {
 		this.template = template;
 		vertical = template.GetLength( 0 );
 		horizontal = template.GetLength( 1 );
-		posX = (int)position.x;
-		posY = (int)position.y;
+		posY = (int)position.x;
+		posX = (int)position.y;
 	}
 
 	public Tetramino RotateTeramino() {
@@ -88,6 +91,6 @@ public class Tetramino {
 			}
 		}
 		
-		return new Tetramino( newTemplate, new Vector2( posX, posY ) );
+		return new Tetramino( newTemplate, new Vector2( posY, posX ) );
 	}
 }
