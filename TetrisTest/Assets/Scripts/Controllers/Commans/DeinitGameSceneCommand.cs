@@ -10,8 +10,12 @@ class DeinitGameSceneCommand : SimpleCommand
 
         AppFacade.Instance.RemoveMediator(GameFieldViewMediator.NAME);
         AppFacade.Instance.RemoveMediator(NextFieldViewMediator.NAME);
+        AppFacade.Instance.RemoveMediator(ScoreMediator.NAME);
 
         AppFacade.Instance.RemoveProxy(GameFieldProxy.NAME);
         AppFacade.Instance.RemoveProxy(NextFieldProxy.NAME);
+        AppFacade.Instance.RemoveProxy(ScoreProxy.NAME);
+
+        AppFacade.Instance.RemoveCommand(NotificationType.GET_SCORE_LINES_REMOVED_NOTE);
     }
 }

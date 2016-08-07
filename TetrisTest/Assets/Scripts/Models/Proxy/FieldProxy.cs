@@ -194,11 +194,15 @@ public class FieldProxy : Proxy {
     }
 
 	public void RemoveLines() {
+        int linesCount = 0;
 		int fullLine = CheckLines();
 		while( fullLine  > -1 ) {
 			RemoveLine( fullLine );
 			fullLine = CheckLines();
+            linesCount += 1;
 		}
+        if (linesCount > 0)
+            AppFacade.Instance.SendNotification(NotificationType.GET_SCORE_LINES_REMOVED_NOTE, linesCount);
 	}
 	
 	private int CheckLines() {

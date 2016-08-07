@@ -10,8 +10,12 @@ class InitGameSceneCommand : SimpleCommand
 
         AppFacade.Instance.RegisterMediator(new GameFieldViewMediator());
         AppFacade.Instance.RegisterMediator(new NextFieldViewMediator());
+        AppFacade.Instance.RegisterMediator(new ScoreMediator());
 
         AppFacade.Instance.RegisterProxy(new GameFieldProxy());
         AppFacade.Instance.RegisterProxy(new NextFieldProxy());
+        AppFacade.Instance.RegisterProxy(new ScoreProxy());
+
+        AppFacade.Instance.RegisterCommand(NotificationType.GET_SCORE_LINES_REMOVED_NOTE, typeof(GetScoreLinesRemovedCommand));
     }
 }
