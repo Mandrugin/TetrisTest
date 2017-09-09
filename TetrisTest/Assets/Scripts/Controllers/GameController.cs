@@ -47,7 +47,8 @@ public class GameController : MonoBehaviour {
     {
         if (gameAreaModel.IsTetraminoTop)
         {
-            GameOver(); // вынести в команду
+            OnGameOver();
+            AppFacade.Instance.SendNotification(NotificationType.GAME_OVER_NOTE);
         }
         else
         {
@@ -86,9 +87,8 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	void GameOver() {
+	void OnGameOver() {
 		unlockControl = false;
         StopAllCoroutines();
-        AppFacade.Instance.RegisterMediator(new GameOverMediator());
     }
 }

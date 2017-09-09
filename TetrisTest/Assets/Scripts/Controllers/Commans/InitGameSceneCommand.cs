@@ -17,5 +17,6 @@ class InitGameSceneCommand : SimpleCommand
         AppFacade.Instance.RegisterProxy(new ScoreProxy());
 
         AppFacade.Instance.RegisterCommand(NotificationType.GET_SCORE_LINES_REMOVED_NOTE, typeof(GetScoreLinesRemovedCommand));
+        AppFacade.Instance.RegisterCommand(NotificationType.GAME_OVER_NOTE, typeof(GameOverCommand));
     }
 }

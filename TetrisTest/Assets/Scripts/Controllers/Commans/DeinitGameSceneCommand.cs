@@ -17,5 +17,6 @@ class DeinitGameSceneCommand : SimpleCommand
         AppFacade.Instance.RemoveProxy(ScoreProxy.NAME);
 
         AppFacade.Instance.RemoveCommand(NotificationType.GET_SCORE_LINES_REMOVED_NOTE);
+        AppFacade.Instance.RemoveCommand(NotificationType.GAME_OVER_NOTE);
     }
 }

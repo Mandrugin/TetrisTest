@@ -6,7 +6,7 @@
     // Startup
     public const string APP_STARTUP_NOTE = "appStartupNotification";
 
-    // Commands
+    // COMMANDS
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // init game scene
@@ -25,4 +25,7 @@
 
     // update score view
     public const string SCORE_VIEW_UPDATE_NOTE = "scoreViewUpdateNote";
+
+    // game over
+    public const string GAME_OVER_NOTE = "gameOverNote";
 }
