@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
-using PureMVC.Patterns;
+using strange.extensions.context.api;
+using strange.extensions.dispatcher.eventdispatcher.api;
 
-public class ScoreProxy : Proxy {
+public class Score {
 
-    new public const string NAME = "ScoreProxy";
+    [Inject(ContextKeys.CONTEXT_DISPATCHER)]
+    private IEventDispatcher contextDispatcher { get; set; }
+
     private int score = 0;
 
-    public ScoreProxy() : base(NAME) {}
+    public Score() {}
 
     public void SetScoreFromRemovedLines(int linesCount)
     {
@@ -29,6 +32,6 @@ public class ScoreProxy : Proxy {
                 break;
         }
 
-        AppFacade.Instance.SendNotification(NotificationType.SCORE_VIEW_UPDATE_NOTE, score);
+        contextDispatcher.Dispatch(NotificationType.SCORE_VIEW_UPDATE_NOTE, score);
     }
 }

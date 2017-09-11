@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using strange.extensions.context.api;
+using strange.extensions.dispatcher.eventdispatcher.api;
 
 public class GameController : MonoBehaviour {
 
@@ -10,19 +12,20 @@ public class GameController : MonoBehaviour {
 	private bool pressedRIGHT = false;
 	private bool unlockControl = true;
 
-	private GameFieldProxy gameAreaModel;
-	private NextFieldProxy nextAreaModel;
+    [Inject("GAME_FIELD")]
+	public Field gameAreaModel { get; set; }
 
-	void Awake() {
-        AppFacade.Instance.SendNotification(NotificationType.INIT_GAME_SCENE_NOTE);
+    [Inject("NEXT_FIELD")]
+	private Field nextAreaModel { get; set; }
 
-        gameAreaModel = AppFacade.Instance.RetrieveProxy(GameFieldProxy.NAME) as GameFieldProxy;
-        nextAreaModel = AppFacade.Instance.RetrieveProxy(NextFieldProxy.NAME) as NextFieldProxy;
+    [Inject(ContextKeys.CONTEXT_DISPATCHER)]
+    private IEventDispatcher contextDispatcher { get; set; }
+
+    [PostConstruct]
+	void PostConstruct() {
+        contextDispatcher.Dispatch(NotificationType.INIT_GAME_SCENE_NOTE);
+        StartCoroutine(Step());
     }
-
-    void Start () {
-        StartCoroutine( Step() );
-	}
 
     /// <summary>
     /// Игровой шаг.
@@ -48,7 +51,7 @@ public class GameController : MonoBehaviour {
         if (gameAreaModel.IsTetraminoTop)
         {
             OnGameOver();
-            AppFacade.Instance.SendNotification(NotificationType.GAME_OVER_NOTE);
+            contextDispatcher.Dispatch(NotificationType.GAME_OVER_NOTE);
         }
         else
         {

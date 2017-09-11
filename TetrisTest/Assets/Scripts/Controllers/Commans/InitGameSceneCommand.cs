@@ -1,22 +1,21 @@
-﻿using PureMVC.Patterns;
-using PureMVC.Interfaces;
+﻿using strange.extensions.command.impl;
 using UnityEngine;
 
-class InitGameSceneCommand : SimpleCommand
+class InitGameSceneCommand : EventCommand
 {
-    public override void Execute(INotification notification)
+    public override void Execute()
     {
         Debug.Log("InitGameSceneCommand Executing");
 
-        AppFacade.Instance.RegisterMediator(new GameFieldViewMediator());
-        AppFacade.Instance.RegisterMediator(new NextFieldViewMediator());
-        AppFacade.Instance.RegisterMediator(new ScoreMediator());
+        //AppContext.Instance.RegisterMediator(new GameFieldViewMediator());
+        //AppContext.Instance.RegisterMediator(new NextFieldViewMediator());
+        //AppContext.Instance.RegisterMediator(new ScoreMediator());
 
-        AppFacade.Instance.RegisterProxy(new GameFieldProxy());
-        AppFacade.Instance.RegisterProxy(new NextFieldProxy());
-        AppFacade.Instance.RegisterProxy(new ScoreProxy());
+        //AppContext.Instance.RegisterProxy(new GameField());
+        //AppContext.Instance.RegisterProxy(new NextField());
+        //AppContext.Instance.RegisterProxy(new Score());
 
-        AppFacade.Instance.RegisterCommand(NotificationType.GET_SCORE_LINES_REMOVED_NOTE, typeof(GetScoreLinesRemovedCommand));
-        AppFacade.Instance.RegisterCommand(NotificationType.GAME_OVER_NOTE, typeof(GameOverCommand));
+        //AppContext.Instance.RegisterCommand(NotificationType.GET_SCORE_LINES_REMOVED_NOTE, typeof(GetScoreLinesRemovedCommand));
+        //AppContext.Instance.RegisterCommand(NotificationType.GAME_OVER_NOTE, typeof(GameOverCommand));
     }
 }

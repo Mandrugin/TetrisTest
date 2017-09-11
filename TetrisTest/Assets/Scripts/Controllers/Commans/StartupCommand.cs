@@ -1,18 +1,30 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using PureMVC.Patterns;
-using PureMVC.Interfaces;
+using strange.extensions.command.impl;
+using strange.extensions.context.api;
 
-/// <summary>
-/// Startup application simple command;
-/// </summary>
-public class StartupCommand : SimpleCommand
+public class StartupCommand : EventCommand
 {
-    public override void Execute(INotification notification)
+    private static readonly string prefabPath = "MainMenuCanvas";
+
+    [Inject(ContextKeys.CONTEXT_VIEW)]
+    public GameObject contextView { get; set; }
+
+    public override void Execute()
     {
-        AppFacade.Instance.RegisterCommand(NotificationType.INIT_GAME_SCENE_NOTE, typeof(InitGameSceneCommand));
-        AppFacade.Instance.RegisterCommand(NotificationType.DEINIT_GAME_SCENE_NOTE, typeof(DeinitGameSceneCommand));
-        SceneManager.LoadScene("start");
+        //AppContext.Instance.RegisterCommand(NotificationType.INIT_GAME_SCENE_NOTE, typeof(InitGameSceneCommand));
+        //AppContext.Instance.RegisterCommand(NotificationType.DEINIT_GAME_SCENE_NOTE, typeof(DeinitGameSceneCommand));
+        //SceneManager.LoadScene("start");
+
+        var go = Object.Instantiate(Resources.Load(prefabPath)) as GameObject;
+        if (go != null)
+        {
+            go.transform.SetParent(contextView.transform);
+        }
+        else
+        {
+            Debug.LogError("Main menu not found!");
+        }
+
         Debug.Log("Startup command executed");
     }
 }

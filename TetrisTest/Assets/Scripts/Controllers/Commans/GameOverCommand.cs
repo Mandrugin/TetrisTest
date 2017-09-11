@@ -1,12 +1,11 @@
-﻿using PureMVC.Interfaces;
-using PureMVC.Patterns;
+﻿using strange.extensions.command.impl;
 using UnityEngine;
 
-public class GameOverCommand : SimpleCommand
+public class GameOverCommand : EventCommand
 {
-    public override void Execute(INotification notification)
+    public override void Execute()
     {
-        AppFacade.Instance.RegisterMediator(new GameOverMediator());
+        //AppContext.Instance.RegisterMediator(new GameOverMediator());
         Debug.Log("GameOver command executed");
     }
 }

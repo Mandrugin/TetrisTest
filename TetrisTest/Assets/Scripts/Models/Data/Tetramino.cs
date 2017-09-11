@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using PureMVC.Patterns;
 
 /// <summary>
 /// Класс представляющий понятие тетрамино
@@ -9,42 +8,42 @@ public class Tetramino {
 
 	#region Tetramino templates
 	public const int TETRAMINO_MAX_SIZE = 4;
-	private static int[,] Tetramino1 = { 
+	private static readonly int[,] Tetramino1 = { 
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 },
 		{ 0, 1, 0, 0 } };
 	
-	private static int[,] Tetramino2 = {
+	private static readonly int[,] Tetramino2 = {
 		{ 1, 1 },
 		{ 1, 1 } };
 	
-	private static int[,] Tetramino3 = {
+	private static readonly int[,] Tetramino3 = {
 		{ 0, 1, 0 },
 		{ 0, 1, 0 },
 		{ 0, 1, 1 } };
 	
-	private static int[,] Tetramino4 = {
+	private static readonly int[,] Tetramino4 = {
 		{ 0, 1, 0 },
 		{ 0, 1, 0 },
 		{ 1, 1, 0 } };
 	
-	private static int[,] Tetramino5 = {
+	private static readonly int[,] Tetramino5 = {
 		{ 0, 1, 0 },
 		{ 1, 1, 0 },
 		{ 1, 0, 0 } };
 	
-	private static int[,] Tetramino6 = {
+	private static readonly int[,] Tetramino6 = {
 		{ 1, 0, 0 },
 		{ 1, 1, 0 },
 		{ 0, 1, 0 } };
 	
-	private static int[,] Tetramino7 = {
+	private static readonly int[,] Tetramino7 = {
 		{ 0, 1, 0 },
 		{ 1, 1, 0 },
 		{ 0, 1, 0 } };
 	
-	private static List<int[,]> Tetraminos = new List<int[,]> { Tetramino1, Tetramino2, Tetramino3, Tetramino4, Tetramino5, Tetramino6, Tetramino7 };
+	private static readonly List<int[,]> Tetraminos = new List<int[,]> { Tetramino1, Tetramino2, Tetramino3, Tetramino4, Tetramino5, Tetramino6, Tetramino7 };
 	#endregion
 
 	public int posY;

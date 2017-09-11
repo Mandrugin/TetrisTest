@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
-using PureMVC.Patterns;
+using strange.extensions.context.api;
+using strange.extensions.dispatcher.eventdispatcher.api;
 
 /// <summary>
 /// Класс представляющий и управляющий моделью игрового поля
 /// содержит двумерный массив целых чисел который и абстрагирует игровое поле,
 /// также содержит тетрамино которое находится на игровом поле
 /// </summary>
-public class FieldProxy : Proxy {
+public class Field
+{
+    [Inject(ContextKeys.CONTEXT_DISPATCHER)]
+    public IEventDispatcher contextDispatcher { get; set; }
 
-	private int[,] field;
+    private Tetramino tetramino;
+
+    private int[,] field;
 	private int vertical;
 	private int horizontal;
-    private Tetramino tetramino;
 
     public int TetraminoNumber { get { return tetramino.Number; } }
     public bool IsTetraminoTop { get { return tetramino.posY <= Tetramino.TETRAMINO_MAX_SIZE - 1; } }
@@ -44,8 +49,7 @@ public class FieldProxy : Proxy {
     /// </summary>
     /// <param name="verticalSize"></param>
     /// <param name="horizontalSize"></param>
-	public FieldProxy( int verticalSize, int horizontalSize, string name )
-        : base(name)
+	public Field( int verticalSize, int horizontalSize)
     {
 		vertical = verticalSize;
 		horizontal = horizontalSize;
@@ -56,10 +60,7 @@ public class FieldProxy : Proxy {
 				field[i, j] = ConstStorage.EMPTY_ELEMENT;
 			}
 		}
-	}
 
-    public override void OnRegister()
-    {
         NewTetramino();
     }
 
@@ -68,7 +69,7 @@ public class FieldProxy : Proxy {
         tetramino = new Tetramino(Vector2.zero, number);
         tetramino.posX = horizontal / 2 - tetramino.Horizontal / 2;
         tetramino.posY = Tetramino.TETRAMINO_MAX_SIZE - tetramino.Vertical;
-        AppFacade.Instance.SendNotification(updateNote, GetField());
+        contextDispatcher.Dispatch(updateNote, GetField());
     }
 
     public void FixTetramino()
@@ -160,7 +161,7 @@ public class FieldProxy : Proxy {
     {
         if (Test())
         {
-            AppFacade.Instance.SendNotification(updateNote, GetField());
+            contextDispatcher.Dispatch(updateNote, GetField());
             return true;
         }
         else
@@ -173,7 +174,7 @@ public class FieldProxy : Proxy {
         tetramino = tetramino.RotateTeramino();
         if (Test())
         {
-            AppFacade.Instance.SendNotification(updateNote, GetField());
+            contextDispatcher.Dispatch(updateNote, GetField());
             return true;
         }
         else
@@ -190,7 +191,7 @@ public class FieldProxy : Proxy {
             tetramino.posY += 1;
         }
         tetramino.posY -= 1;
-        AppFacade.Instance.SendNotification(updateNote, GetField());
+        contextDispatcher.Dispatch(updateNote, GetField());
     }
 
 	public void RemoveLines() {
@@ -202,7 +203,7 @@ public class FieldProxy : Proxy {
             linesCount += 1;
 		}
         if (linesCount > 0)
-            AppFacade.Instance.SendNotification(NotificationType.GET_SCORE_LINES_REMOVED_NOTE, linesCount);
+	        contextDispatcher.Dispatch(NotificationType.GET_SCORE_LINES_REMOVED_NOTE, linesCount);
 	}
 	
 	private int CheckLines() {
