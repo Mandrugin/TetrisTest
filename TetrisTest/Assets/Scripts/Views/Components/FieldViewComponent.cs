@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using strange.extensions.mediation.impl;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// Класс отображающий игровое поле на экране
 /// </summary>
-public class FieldViewComponent : MonoBehaviour {
+public class FieldViewComponent : View {
 
     public RectTransform rect;
 

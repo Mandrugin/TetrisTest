@@ -7,7 +7,7 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 /// содержит двумерный массив целых чисел который и абстрагирует игровое поле,
 /// также содержит тетрамино которое находится на игровом поле
 /// </summary>
-public class Field
+public class Field : IField
 {
     [Inject(ContextKeys.CONTEXT_DISPATCHER)]
     public IEventDispatcher contextDispatcher { get; set; }

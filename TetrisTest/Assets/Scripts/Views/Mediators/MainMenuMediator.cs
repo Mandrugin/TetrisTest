@@ -1,4 +1,6 @@
-﻿using strange.extensions.mediation.impl;
+﻿using strange.extensions.context.api;
+using strange.extensions.context.impl;
+using strange.extensions.mediation.impl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,7 +23,8 @@ class MainMenuMediator : EventMediator
 
     private void OnStart()
     {
-        SceneManager.LoadScene("main");
+        Debug.Log("start button clicked!");
+        dispatcher.Dispatch(NotificationType.INIT_GAME_SCENE_NOTE);
     }
 
     private void OnExit()

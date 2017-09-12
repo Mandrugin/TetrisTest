@@ -2,6 +2,7 @@
 using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
+using strange.extensions.mediation.impl;
 
 public class GameController : MonoBehaviour {
 
@@ -12,18 +13,18 @@ public class GameController : MonoBehaviour {
 	private bool pressedRIGHT = false;
 	private bool unlockControl = true;
 
-    [Inject("GAME_FIELD")]
-	public Field gameAreaModel { get; set; }
+    [Inject]
+	public IField gameAreaModel { get; set; }
 
-    [Inject("NEXT_FIELD")]
-	private Field nextAreaModel { get; set; }
+    //[Inject("NEXT_FIELD")]
+	//public IField nextAreaModel { get; set; }
 
     [Inject(ContextKeys.CONTEXT_DISPATCHER)]
-    private IEventDispatcher contextDispatcher { get; set; }
+    public IEventDispatcher contextDispatcher { get; set; }
 
     [PostConstruct]
 	void PostConstruct() {
-        contextDispatcher.Dispatch(NotificationType.INIT_GAME_SCENE_NOTE);
+        //contextDispatcher.Dispatch(NotificationType.INIT_GAME_SCENE_NOTE);
         StartCoroutine(Step());
     }
 
@@ -56,8 +57,8 @@ public class GameController : MonoBehaviour {
         else
         {
             gameAreaModel.FixTetramino();
-            gameAreaModel.NewTetramino(nextAreaModel.TetraminoNumber);
-            nextAreaModel.NewTetramino();
+            //gameAreaModel.NewTetramino(nextAreaModel.TetraminoNumber);
+            //nextAreaModel.NewTetramino();
             gameAreaModel.RemoveLines();
         }
     }
