@@ -1,22 +1,25 @@
 ﻿using strange.extensions.command.impl;
+using strange.extensions.context.api;
+using strange.extensions.context.impl;
 using strange.extensions.injector.impl;
 using UnityEngine;
+using UnityEngine.Windows.Speech;
 
 class InitGameSceneCommand : EventCommand
 {
-    string prefabPath = "gameAreaCanvas";
+    private static readonly string prefabGamePath = "gameAreaCanvas";
+    private static readonly string prefabNextPath = "nextAreaCanvas";
 
     public override void Execute()
     {
         Debug.Log("InitGameSceneCommand Executing");
 
-        var prefab = GameObject.Instantiate(Resources.Load(prefabPath)) as GameObject;
-        var field = prefab.GetComponentInChildren<FieldViewComponent>();
+        Object.Instantiate(Resources.Load(prefabGamePath));
+        Object.Instantiate(Resources.Load(prefabNextPath));
 
         var go = new GameObject();
         var gameController = go.AddComponent<GameController>();
-        //go.transform.SetParent(context.transform);
-        injectionBinder.injector.Inject(gameController);
+        injectionBinder.injector.Inject(gameController, false);
 
         //AppContext.Instance.RegisterMediator(new GameFieldViewMediator());
         //AppContext.Instance.RegisterMediator(new NextFieldViewMediator());

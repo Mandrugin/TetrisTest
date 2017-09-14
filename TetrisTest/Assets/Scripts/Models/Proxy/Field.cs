@@ -49,7 +49,7 @@ public class Field : IField
     /// </summary>
     /// <param name="verticalSize"></param>
     /// <param name="horizontalSize"></param>
-	public Field( int verticalSize, int horizontalSize)
+	public void SetFieldSize( int verticalSize, int horizontalSize)
     {
 		vertical = verticalSize;
 		horizontal = horizontalSize;

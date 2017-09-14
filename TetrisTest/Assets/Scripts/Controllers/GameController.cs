@@ -13,18 +13,17 @@ public class GameController : MonoBehaviour {
 	private bool pressedRIGHT = false;
 	private bool unlockControl = true;
 
-    [Inject]
+    [Inject("GAME_FIELD")]
 	public IField gameAreaModel { get; set; }
 
-    //[Inject("NEXT_FIELD")]
-	//public IField nextAreaModel { get; set; }
+    [Inject("NEXT_FIELD")]
+	public IField nextAreaModel { get; set; }
 
     [Inject(ContextKeys.CONTEXT_DISPATCHER)]
     public IEventDispatcher contextDispatcher { get; set; }
 
     [PostConstruct]
-	void PostConstruct() {
-        //contextDispatcher.Dispatch(NotificationType.INIT_GAME_SCENE_NOTE);
+	public void PostConstruct() {
         StartCoroutine(Step());
     }
 
@@ -57,8 +56,8 @@ public class GameController : MonoBehaviour {
         else
         {
             gameAreaModel.FixTetramino();
-            //gameAreaModel.NewTetramino(nextAreaModel.TetraminoNumber);
-            //nextAreaModel.NewTetramino();
+            gameAreaModel.NewTetramino(nextAreaModel.TetraminoNumber);
+            nextAreaModel.NewTetramino();
             gameAreaModel.RemoveLines();
         }
     }
