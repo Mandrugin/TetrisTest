@@ -70,6 +70,7 @@ public class Field : IField
         tetramino.posX = horizontal / 2 - tetramino.Horizontal / 2;
         tetramino.posY = Tetramino.TETRAMINO_MAX_SIZE - tetramino.Vertical;
         contextDispatcher.Dispatch(updateNote, GetField());
+        Debug.Log("New tetramino: " + updateNote);
     }
 
     public void FixTetramino()

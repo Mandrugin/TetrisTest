@@ -6,7 +6,7 @@
     [PostConstruct]
     public void PostConstruct()
     {
-        SetFieldSize(_verticalSize, _horizontalSize);
         updateNote = NotificationType.GAME_FIELD_VIEW_UPDATE_NOTE;
+        SetFieldSize(_verticalSize, _horizontalSize);
     }
 }

@@ -10,7 +10,7 @@
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // init game scene
-    public const string INIT_GAME_SCENE_NOTE = "InitGameSceneNote";
+    public const string INIT_GAME_FIELDS_NOTE = "InitGameSceneNote";
     // deinit game scene
     public const string DEINIT_GAME_SCENE_NOTE = "DeinitGameSceneNote";
     // get score from removed lines

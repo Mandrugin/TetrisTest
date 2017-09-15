@@ -11,10 +11,6 @@ public class StartupCommand : EventCommand
 
     public override void Execute()
     {
-        //AppContext.Instance.RegisterCommand(NotificationType.INIT_GAME_SCENE_NOTE, typeof(InitGameSceneCommand));
-        //AppContext.Instance.RegisterCommand(NotificationType.DEINIT_GAME_SCENE_NOTE, typeof(DeinitGameSceneCommand));
-        //SceneManager.LoadScene("start");
-
         var go = Object.Instantiate(Resources.Load(prefabPath)) as GameObject;
         if (go != null)
         {

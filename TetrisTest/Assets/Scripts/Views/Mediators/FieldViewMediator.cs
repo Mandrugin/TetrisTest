@@ -1,4 +1,5 @@
-﻿using strange.extensions.dispatcher.eventdispatcher.api;
+﻿using System.Diagnostics;
+using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
 
 public class GameFieldViewMediator : EventMediator {
@@ -10,6 +11,7 @@ public class GameFieldViewMediator : EventMediator {
 
     public override void OnRegister()
     {
+        UnityEngine.Debug.Log("RegisterMediator: " + viewComponent.NAME);
         if (viewComponent.NAME == "GAME")
         {
             width = ConstStorage.HORIZONTAL_SIZE;
@@ -27,6 +29,7 @@ public class GameFieldViewMediator : EventMediator {
 
             dispatcher.AddListener(NotificationType.NEXT_FIELD_VIEW_UPDATE_NOTE, OnUpdate);
         }
+        UnityEngine.Debug.Log("RegisterMediator: " + viewComponent.NAME);
     }
 
     public override void OnRemove()
@@ -44,6 +47,7 @@ public class GameFieldViewMediator : EventMediator {
 
     public void OnUpdate(IEvent e)
     {
+        UnityEngine.Debug.Log("type: " + viewComponent.NAME + " [OnUpdate]");
         viewComponent.UpdateView((int[,])e.data);
     }
 }

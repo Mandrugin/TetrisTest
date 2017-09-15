@@ -21,7 +21,7 @@ public class AppContext : MVCSContext
         mediationBinder.BindView<MainMenuView>().ToMediator<MainMenuMediator>();
         mediationBinder.BindView<FieldViewComponent>().ToMediator<GameFieldViewMediator>();
 
-        commandBinder.Bind(NotificationType.INIT_GAME_SCENE_NOTE).To<InitGameSceneCommand>();
+        commandBinder.Bind(NotificationType.INIT_GAME_FIELDS_NOTE).To<InitGameFieldsCommand>();
         commandBinder.Bind(ContextEvent.START).To<StartupCommand>().Once();
     }
 }

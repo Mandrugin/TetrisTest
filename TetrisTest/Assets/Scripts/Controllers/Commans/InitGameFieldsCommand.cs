@@ -5,14 +5,14 @@ using strange.extensions.injector.impl;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 
-class InitGameSceneCommand : EventCommand
+class InitGameFieldsCommand : EventCommand
 {
     private static readonly string prefabGamePath = "gameAreaCanvas";
     private static readonly string prefabNextPath = "nextAreaCanvas";
 
     public override void Execute()
     {
-        Debug.Log("InitGameSceneCommand Executing");
+        Debug.Log("InitGameFieldsCommand Executing");
 
         Object.Instantiate(Resources.Load(prefabGamePath));
         Object.Instantiate(Resources.Load(prefabNextPath));
@@ -21,8 +21,6 @@ class InitGameSceneCommand : EventCommand
         var gameController = go.AddComponent<GameController>();
         injectionBinder.injector.Inject(gameController, false);
 
-        //AppContext.Instance.RegisterMediator(new GameFieldViewMediator());
-        //AppContext.Instance.RegisterMediator(new NextFieldViewMediator());
         //AppContext.Instance.RegisterMediator(new ScoreMediator());
 
         //AppContext.Instance.RegisterProxy(new Score());
