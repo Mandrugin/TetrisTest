@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using strange.extensions.mediation.impl;
 using UnityEngine.UI;
 
-public class ScoreComponent : MonoBehaviour {
+public class ScoreView : EventView {
 
     public Text ScoreText;
     

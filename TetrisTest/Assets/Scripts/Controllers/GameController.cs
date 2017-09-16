@@ -13,6 +13,9 @@ public class GameController : MonoBehaviour {
 	private bool pressedRIGHT = false;
 	private bool unlockControl = true;
 
+    [Inject]
+    public Score score { get; set; }
+
     [Inject("GAME_FIELD")]
 	public IField gameAreaModel { get; set; }
 
@@ -24,6 +27,7 @@ public class GameController : MonoBehaviour {
 
     [PostConstruct]
 	public void PostConstruct() {
+        Debug.Log("CameController:PostConstruct");
         StartCoroutine(Step());
     }
 
@@ -36,7 +40,10 @@ public class GameController : MonoBehaviour {
     /// </remarks>
     /// <returns></returns>
 	IEnumerator Step() {
-		while( true ) {
+        yield return new WaitForSeconds(ConstStorage.STEP_TIME);
+        gameAreaModel.Init();
+        nextAreaModel.Init();
+        while ( true ) {
 			yield return new WaitForSeconds( ConstStorage.STEP_TIME );
             gameAreaModel.TetraminoMoveDown();
 			if( gameAreaModel.TestTetramino() == false ) {

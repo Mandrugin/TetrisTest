@@ -7,6 +7,11 @@
     public void PostConstruct()
     {
         updateNote = NotificationType.GAME_FIELD_VIEW_UPDATE_NOTE;
+    }
+
+    public override void Init()
+    {
+        base.Init();
         SetFieldSize(_verticalSize, _horizontalSize);
     }
 }

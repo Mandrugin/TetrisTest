@@ -23,6 +23,11 @@ public class Field : IField
 
     protected string updateNote = "";
 
+    public virtual void Init()
+    {
+        // ...
+    }
+
     public void TetraminoMoveUp()
     {
         tetramino.posY -= 1;

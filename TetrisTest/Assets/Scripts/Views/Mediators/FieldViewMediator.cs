@@ -11,7 +11,6 @@ public class GameFieldViewMediator : EventMediator {
 
     public override void OnRegister()
     {
-        UnityEngine.Debug.Log("RegisterMediator: " + viewComponent.NAME);
         if (viewComponent.NAME == "GAME")
         {
             width = ConstStorage.HORIZONTAL_SIZE;

@@ -5,7 +5,7 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 public class Score {
 
     [Inject(ContextKeys.CONTEXT_DISPATCHER)]
-    private IEventDispatcher contextDispatcher { get; set; }
+    public IEventDispatcher contextDispatcher { get; set; }
 
     private int score = 0;
 

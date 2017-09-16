@@ -1,34 +1,25 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
 
-public class ScoreMediator : Mediator {
+public class ScoreMediator : EventMediator {
 
-    private const string PREFAB_PATH = "ScoreCanvas";
-    private ScoreComponent viewComponent;
+    [Inject]
+    public ScoreView _viewView { get; set; }
 
     public override void OnRegister()
     {
-        //ViewComponent = GameObject.Instantiate(Resources.Load(PREFAB_PATH));
-        //viewComponent = View.GetComponentInChildren<ScoreComponent>();
-        //viewComponent.UpdateScore(0);
+        _viewView.UpdateScore(0);
+
+        dispatcher.AddListener(NotificationType.SCORE_VIEW_UPDATE_NOTE, OnScoreUpdate);
     }
 
-    //public override IList<string> ListNotificationInterests()
-    //{
-    //    List<string> notificationList = new List<string>();
-    //    notificationList.Add(NotificationType.SCORE_VIEW_UPDATE_NOTE);
+    public override void OnRemove()
+    {
+        dispatcher.RemoveListener(NotificationType.SCORE_VIEW_UPDATE_NOTE, OnScoreUpdate);
+    }
 
-    //    return notificationList;
-    //}
-
-    //public override void HandleNotification(INotification notification)
-    //{
-    //    switch (notification.Name)
-    //    {
-    //        case NotificationType.SCORE_VIEW_UPDATE_NOTE:
-    //            viewComponent.UpdateScore((int)notification.Body);
-    //            break;
-    //    }
-    //}
+    private void OnScoreUpdate(IEvent e)
+    {
+        _viewView.UpdateScore((int)e.data);
+    }
 }

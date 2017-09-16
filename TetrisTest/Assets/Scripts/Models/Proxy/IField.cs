@@ -1,5 +1,6 @@
 public interface IField
 {
+    void Init();
     int TetraminoNumber { get; }
     bool IsTetraminoTop { get; }
     void TetraminoMoveUp();

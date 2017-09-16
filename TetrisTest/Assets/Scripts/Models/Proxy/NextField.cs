@@ -7,6 +7,11 @@
     public void PostConstruct()
     {
         updateNote = NotificationType.NEXT_FIELD_VIEW_UPDATE_NOTE;
+    }
+
+    public override void Init()
+    {
+        base.Init();
         SetFieldSize(_verticalSize, _horizontalSize);
     }
 }
