@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Класс отображающий игровое поле на экране
 /// </summary>
-public class FieldViewComponent : View
+public class FieldView : View
 {
 
     public string NAME = "";

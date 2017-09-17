@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class GameOverCommand : EventCommand
 {
+    static readonly string PREFAB_PATH = "GameOverCanvas";
+
     public override void Execute()
     {
-        //AppContext.Instance.RegisterMediator(new GameOverMediator());
+        Object.Instantiate(Resources.Load(PREFAB_PATH));
         Debug.Log("GameOver command executed");
     }
 }

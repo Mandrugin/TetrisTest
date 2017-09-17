@@ -1,29 +1,22 @@
 ﻿using strange.extensions.mediation.impl;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
-class GameOverMediator : Mediator
+class GameOverMediator : EventMediator
 {
-    static readonly string PREFAB_PATH = "GameOverCanvas";
-    private GameOverComponent viewComponent;
+    [Inject]
+    public GameOverView vameOverView { get; set; }
 
-    //public override void OnRegister()
-    //{
-    //    ViewComponent = GameObject.Instantiate(Resources.Load(PREFAB_PATH));
-    //    viewComponent = View.GetComponentInChildren<GameOverComponent>();
+    public override void OnRegister()
+    {
+        vameOverView.dispatcher.AddListener(GameOverView.Events.BUTTON_CLICKED, OnButtonClicked);
+    }
 
-    //    viewComponent.TitleText.text = "Game Over";
-    //    viewComponent.ButtonText.text = "Return to menu";
-    //    viewComponent.ActionButton.onClick.AddListener( () => {
-    //        AppContext.Instance.RemoveMediator(NAME);
-    //        AppContext.Instance.SendNotification(NotificationType.DEINIT_GAME_SCENE_NOTE);
-    //        SceneManager.LoadScene("start");
-    //    } );
+    public override void OnRemove()
+    {
+        vameOverView.dispatcher.RemoveListener(GameOverView.Events.BUTTON_CLICKED, OnButtonClicked);
+    }
 
-    //}
-
-    //public override void OnRemove()
-    //{
-    //    GameObject.Destroy(View);
-    //}
+    private void OnButtonClicked()
+    {
+        dispatcher.Dispatch(NotificationType.DEINIT_GAME_SCENE_NOTE);
+    }
 }
