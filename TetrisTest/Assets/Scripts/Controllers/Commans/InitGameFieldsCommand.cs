@@ -1,4 +1,5 @@
 ﻿using strange.extensions.command.impl;
+using strange.extensions.context.api;
 using UnityEngine;
 
 class InitGameFieldsCommand : EventCommand
@@ -7,15 +8,21 @@ class InitGameFieldsCommand : EventCommand
     private static readonly string prefabNextPath = "nextAreaCanvas";
     private static readonly string prefabSrocePath = "ScoreCanvas";
 
+    [Inject(ContextKeys.CONTEXT_VIEW)]
+    public GameObject contextView { get; set; }
+
     public override void Execute()
     {
-        Debug.Log("InitGameFieldsCommand Executing");
+        GameObject go = null;
 
-        Object.Instantiate(Resources.Load(prefabGamePath));
-        Object.Instantiate(Resources.Load(prefabNextPath));
-        Object.Instantiate(Resources.Load(prefabSrocePath));
+        go = Object.Instantiate(Resources.Load<GameObject>(prefabGamePath));
+        go.transform.SetParent(contextView.transform);
+        go = Object.Instantiate(Resources.Load<GameObject>(prefabNextPath));
+        go.transform.SetParent(contextView.transform);
+        go = Object.Instantiate(Resources.Load<GameObject>(prefabSrocePath));
+        go.transform.SetParent(contextView.transform);
 
-        var go = new GameObject();
+        go = new GameObject("GameController");
         var gameController = go.AddComponent<GameController>();
         injectionBinder.injector.Inject(gameController, false);
     }

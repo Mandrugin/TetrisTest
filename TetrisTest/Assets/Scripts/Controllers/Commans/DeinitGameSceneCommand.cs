@@ -1,10 +1,10 @@
 ﻿using strange.extensions.command.impl;
-using UnityEngine;
 
 class DeinitGameSceneCommand : EventCommand
 {
     public override void Execute()
     {
-        Debug.Log("DeinitGameSceneCommand Executing");
+        dispatcher.Dispatch(NotificationType.DESTROY_SCORE_VIEW);
+        dispatcher.Dispatch(NotificationType.DESTROY_FIELDS_VIEWS);
     }
 }

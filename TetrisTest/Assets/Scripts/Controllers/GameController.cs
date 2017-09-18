@@ -2,7 +2,6 @@
 using System.Collections;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
 
 public class GameController : MonoBehaviour {
 
@@ -27,8 +26,13 @@ public class GameController : MonoBehaviour {
 
     [PostConstruct]
 	public void PostConstruct() {
-        Debug.Log("CameController:PostConstruct");
         StartCoroutine(Step());
+        contextDispatcher.AddListener(NotificationType.GAME_OVER_NOTE, OnGameOver);
+    }
+
+    void OnDestroy()
+    {
+        contextDispatcher.RemoveListener(NotificationType.GAME_OVER_NOTE, OnGameOver);
     }
 
     /// <summary>
@@ -57,7 +61,6 @@ public class GameController : MonoBehaviour {
     {
         if (gameAreaModel.IsTetraminoTop)
         {
-            OnGameOver();
             contextDispatcher.Dispatch(NotificationType.GAME_OVER_NOTE);
         }
         else
@@ -98,7 +101,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	void OnGameOver() {
-		unlockControl = false;
+        unlockControl = false;
         StopAllCoroutines();
+        Destroy(gameObject);
     }
 }

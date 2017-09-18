@@ -27,7 +27,8 @@ public class GameFieldMediator : EventMediator {
 
             dispatcher.AddListener(NotificationType.NEXT_FIELD_VIEW_UPDATE_NOTE, OnUpdate);
         }
-        UnityEngine.Debug.Log("RegisterMediator: " + View.NAME);
+        
+        dispatcher.AddListener(NotificationType.DESTROY_FIELDS_VIEWS, OnSelfDestroy);
     }
 
     public override void OnRemove()
@@ -41,11 +42,17 @@ public class GameFieldMediator : EventMediator {
         {
             dispatcher.RemoveListener(NotificationType.NEXT_FIELD_VIEW_UPDATE_NOTE, OnUpdate);
         }
+
+        dispatcher.RemoveListener(NotificationType.DESTROY_FIELDS_VIEWS, OnSelfDestroy);
     }
 
     public void OnUpdate(IEvent e)
     {
-        UnityEngine.Debug.Log("type: " + View.NAME + " [OnUpdate]");
         View.UpdateView((int[,])e.data);
+    }
+
+    private void OnSelfDestroy()
+    {
+        Destroy(transform.parent.gameObject);
     }
 }

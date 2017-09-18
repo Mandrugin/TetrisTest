@@ -2,7 +2,7 @@
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 
-public class StartupCommand : EventCommand
+public class MainMenuCommand : EventCommand
 {
     private static readonly string prefabPath = "MainMenuCanvas";
 
@@ -20,7 +20,5 @@ public class StartupCommand : EventCommand
         {
             Debug.LogError("Main menu not found!");
         }
-
-        Debug.Log("Startup command executed");
     }
 }

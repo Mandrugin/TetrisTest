@@ -18,5 +18,7 @@ class GameOverMediator : EventMediator
     private void OnButtonClicked()
     {
         dispatcher.Dispatch(NotificationType.DEINIT_GAME_SCENE_NOTE);
+        Destroy(transform.parent.gameObject);
+        dispatcher.Dispatch(NotificationType.MAIN_MENU_CRATE_NOTE);
     }
 }

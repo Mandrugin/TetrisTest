@@ -20,7 +20,6 @@ class MainMenuMediator : EventMediator
 
     private void OnStart()
     {
-        Debug.Log("start button clicked!");
         dispatcher.Dispatch(NotificationType.INIT_GAME_FIELDS_NOTE);
         Destroy(gameObject);
     }

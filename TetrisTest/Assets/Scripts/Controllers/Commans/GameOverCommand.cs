@@ -8,6 +8,5 @@ public class GameOverCommand : EventCommand
     public override void Execute()
     {
         Object.Instantiate(Resources.Load(PREFAB_PATH));
-        Debug.Log("GameOver command executed");
     }
 }
