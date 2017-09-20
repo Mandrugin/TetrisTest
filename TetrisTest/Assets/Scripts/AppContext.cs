@@ -35,11 +35,13 @@ public class AppContext : MVCSContext
         mediationBinder.BindView<ScoreView>().ToMediator<ScoreMediator>();
         mediationBinder.BindView<FieldView>().ToMediator<GameFieldMediator>();
         mediationBinder.BindView<GameOverView>().ToMediator<GameOverMediator>();
+        mediationBinder.BindView<InputView>().ToMediator<InputMediator>();
     }
 
     private void MapInjectionBinder()
     {
-        injectionBinder.Bind<IInputController>().To<KeyboardController>().ToSingleton();
+        //injectionBinder.Bind<IInputController>().To<KeyboardController>().ToSingleton();
+        injectionBinder.Bind<IInputController>().To<ButtonsController>().ToSingleton();
         injectionBinder.Bind<IField>().To<GameField>().ToName("GAME_FIELD");
         injectionBinder.Bind<IField>().To<NextField>().ToName("NEXT_FIELD");
         injectionBinder.Bind<Score>().To<Score>().ToSingleton();

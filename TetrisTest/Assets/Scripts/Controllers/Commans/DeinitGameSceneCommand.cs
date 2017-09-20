@@ -6,5 +6,6 @@ class DeinitGameSceneCommand : EventCommand
     {
         dispatcher.Dispatch(NotificationType.DESTROY_SCORE_VIEW);
         dispatcher.Dispatch(NotificationType.DESTROY_FIELDS_VIEWS);
+        dispatcher.Dispatch(NotificationType.DESTROY_BUTTONS_VIEW);
     }
 }

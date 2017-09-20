@@ -15,6 +15,8 @@
     public const string DESTROY_FIELDS_VIEWS = "destroyFieldsViewsNote";
     // destroy score views
     public const string DESTROY_SCORE_VIEW = "destroyScoreView";
+    // destroy buttons views
+    public const string DESTROY_BUTTONS_VIEW = "destroyButtonsView";
 
     // EVENTS
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

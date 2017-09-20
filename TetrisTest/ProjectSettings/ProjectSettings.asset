@@ -137,7 +137,7 @@ PlayerSettings:
   protectGraphicsMemory: 0
   useHDRDisplay: 0
   applicationIdentifier:
-    Android: com.Company.ProductName
+    Android: ru.mandrugin.best
     Standalone: unity.TestCompany.TetrisTest
     Tizen: com.Company.ProductName
     iOS: com.Company.ProductName
