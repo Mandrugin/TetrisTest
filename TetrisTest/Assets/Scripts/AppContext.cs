@@ -39,7 +39,7 @@ public class AppContext : MVCSContext
 
     private void MapInjectionBinder()
     {
-        injectionBinder.Bind<IInputController>().To<KeyboardController>();
+        injectionBinder.Bind<IInputController>().To<KeyboardController>().ToSingleton();
         injectionBinder.Bind<IField>().To<GameField>().ToName("GAME_FIELD");
         injectionBinder.Bind<IField>().To<NextField>().ToName("NEXT_FIELD");
         injectionBinder.Bind<Score>().To<Score>().ToSingleton();

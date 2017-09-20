@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using strange.extensions.command.impl;
+﻿using strange.extensions.command.impl;
 
 public class GetScoreLinesRemovedCommand : EventCommand
 {
@@ -10,7 +9,5 @@ public class GetScoreLinesRemovedCommand : EventCommand
     {
         int linesCount = (int) evt.data;
         score.SetScoreFromRemovedLines(linesCount);
-
-        Debug.Log("GetScoreLinesRemovedCommand command executed");
     }
 }
