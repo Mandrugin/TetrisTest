@@ -5,13 +5,6 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 
 public class GameController : MonoBehaviour {
 
-    // флаги нажания клавишь и состояния ввода
-	private bool pressedUP = false;
-	private bool pressedDOWN = false;
-	private bool pressedLEFT = false;
-	private bool pressedRIGHT = false;
-	private bool unlockControl = true;
-
     [Inject]
     public Score score { get; set; }
 
@@ -20,6 +13,9 @@ public class GameController : MonoBehaviour {
 
     [Inject("NEXT_FIELD")]
 	public IField nextAreaModel { get; set; }
+
+    [Inject]
+    public IInputController controller { get; set; }
 
     [Inject(ContextKeys.CONTEXT_DISPATCHER)]
     public IEventDispatcher contextDispatcher { get; set; }
@@ -73,35 +69,30 @@ public class GameController : MonoBehaviour {
     }
 
 	void Update() {
-		pressedUP = Input.GetKeyDown( KeyCode.UpArrow );
-		pressedDOWN = Input.GetKeyDown( KeyCode.DownArrow );
-		pressedLEFT = Input.GetKeyDown( KeyCode.LeftArrow );
-		pressedRIGHT = Input.GetKeyDown( KeyCode.RightArrow );
-
-		if( pressedLEFT && unlockControl ) {
+		if( controller.IsLeft() ) {
             gameAreaModel.TetraminoMoveLeft();
             if (!gameAreaModel.TestTetramino())
                 gameAreaModel.TetraminoMoveRight();
 		}
 
-		if( pressedRIGHT && unlockControl ) {
+		if( controller.IsRight() ) {
             gameAreaModel.TetraminoMoveRight();
             if (!gameAreaModel.TestTetramino())
                 gameAreaModel.TetraminoMoveLeft();
         }
 
-		if( pressedUP && unlockControl ) {
+		if( controller.IsUp() ) {
             gameAreaModel.TryToRotateTetramino();
         }
 
-		if( pressedDOWN && unlockControl ) {
+		if( controller.IsDown() ) {
             gameAreaModel.TryDownTetramino();
             CheckEndGame();
 		}
 	}
 
 	void OnGameOver() {
-        unlockControl = false;
+        controller.SetLock(true);
         StopAllCoroutines();
         Destroy(gameObject);
     }
