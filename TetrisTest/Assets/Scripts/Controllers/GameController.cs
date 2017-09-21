@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
 
     [PostConstruct]
 	public void PostConstruct() {
+        controller.SetLock(false);
         StartCoroutine(Step());
         contextDispatcher.AddListener(NotificationType.GAME_OVER_NOTE, OnGameOver);
     }

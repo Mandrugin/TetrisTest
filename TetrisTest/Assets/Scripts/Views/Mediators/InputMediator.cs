@@ -12,8 +12,6 @@ public class InputMediator : EventMediator
 
     public override void OnRegister()
     {
-        controller.SetLock(false);
-
         _controller = controller as ButtonsController;
 
         inputView.dispatcher.AddListener(InputView.Events.UP_BUTTON_CLICKED, SetUp);

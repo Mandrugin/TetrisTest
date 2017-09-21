@@ -17,7 +17,9 @@ class InitGameFieldsCommand : EventCommand
         Object.Instantiate(Resources.Load<GameObject>(prefabGamePath), contextView.transform);
         Object.Instantiate(Resources.Load<GameObject>(prefabNextPath), contextView.transform);
         Object.Instantiate(Resources.Load<GameObject>(prefabSrocePath), contextView.transform);
+#if UNITY_ANDROID
         Object.Instantiate(Resources.Load<GameObject>(prefabControllInputCanvas), contextView.transform);
+#endif
 
         var go = new GameObject("GameController", typeof(GameController));
         injectionBinder.injector.Inject(go.GetComponent<GameController>(), false);
