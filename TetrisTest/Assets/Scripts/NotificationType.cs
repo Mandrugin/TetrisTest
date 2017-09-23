@@ -17,6 +17,12 @@
     public const string DESTROY_SCORE_VIEW = "destroyScoreView";
     // destroy buttons views
     public const string DESTROY_BUTTONS_VIEW = "destroyButtonsView";
+    // create record view
+    public const string CREATE_RECORD_VIEW_NOTE = "createRecordViewNote";
+    // data save & load
+    public const string LOAD_PLAYER_DATA = "loadPlayerData";
+    public const string SAVE_PLAYER_DATA = "savePlayerData";
+    public const string CLEAR_PLAYER_DATA = "clearPlayerData";
 
     // EVENTS
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,4 +36,7 @@
 
     // game over
     public const string GAME_OVER_NOTE = "gameOverNote";
+
+    // record window closed
+    public const string RECORD_WINDOW_CLOSED_NOTE = "recordWindowClosedNote";
 }
