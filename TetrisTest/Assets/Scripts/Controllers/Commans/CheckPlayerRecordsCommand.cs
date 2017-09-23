@@ -1,13 +1,21 @@
 ﻿using strange.extensions.command.impl;
-using UnityEngine;
 
-public class CheckPlayerRecordsCommand : EventCommand
+public class CheckPlayerRecordsCommand : Command
 {
     [Inject]
     public Score _score { get; set; }
 
     [Inject]
     public PlayerStats _playerStats { get; set; }
+
+    [Inject]
+    public SavePlayerDataSignal savePlayerDataSignal { get; set; }
+
+    [Inject]
+    public CreateRecordViewSignal createRecordViewSignal { get; set; }
+
+    [Inject]
+    public RecordWindowClosedSignal recordWindowClosedSignal { get; set; }
 
     public override void Execute()
     {
@@ -17,14 +25,14 @@ public class CheckPlayerRecordsCommand : EventCommand
         Retain();
 
         _playerStats.MaxScore = _score.score;
-        dispatcher.Dispatch(NotificationType.SAVE_PLAYER_DATA);
-        dispatcher.Dispatch(NotificationType.CREATE_RECORD_VIEW_NOTE);
-        dispatcher.AddListener(NotificationType.RECORD_WINDOW_CLOSED_NOTE, OnRecordWindowClosed);
+        savePlayerDataSignal.Dispatch();
+        createRecordViewSignal.Dispatch();
+        recordWindowClosedSignal.AddListener(OnRecordWindowClosed);
     }
 
     void OnRecordWindowClosed()
     {
-        dispatcher.RemoveListener(NotificationType.RECORD_WINDOW_CLOSED_NOTE, OnRecordWindowClosed);
+        recordWindowClosedSignal.RemoveListener(OnRecordWindowClosed);
         Release();
     }
 }

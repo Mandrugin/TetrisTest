@@ -1,6 +1,6 @@
 ﻿using strange.extensions.mediation.impl;
 
-public class RecordMediator : EventMediator
+public class RecordMediator : Mediator
 {
     [Inject]
     public RecordView recordView { get; set; }
@@ -8,16 +8,19 @@ public class RecordMediator : EventMediator
     [Inject]
     public PlayerStats playerStats { get; set; }
 
+    [Inject]
+    public RecordWindowClosedSignal recordWindowClosedSignal { get; set; }
+
     public override void OnRegister()
     {
-        recordView.dispatcher.AddListener(RecordView.Events.OK_BUTTON_CLICKED, Close);
+        recordView.okButtonClickedSignal.AddListener(Close);
         recordView.RecordText.text = playerStats.MaxScore.ToString();
     }
 
     public override void OnRemove()
     {
-        recordView.dispatcher.RemoveListener(RecordView.Events.OK_BUTTON_CLICKED, Close);
-        dispatcher.Dispatch(NotificationType.RECORD_WINDOW_CLOSED_NOTE);
+        recordView.okButtonClickedSignal.RemoveListener(Close);
+        recordWindowClosedSignal.Dispatch();
     }
 
     private void Close()

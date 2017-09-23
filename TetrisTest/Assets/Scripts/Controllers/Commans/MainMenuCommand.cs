@@ -2,7 +2,7 @@
 using strange.extensions.command.impl;
 using strange.extensions.context.api;
 
-public class MainMenuCommand : EventCommand
+public class MainMenuCommand : Command
 {
     private static readonly string prefabPath = "MainMenuCanvas";
 

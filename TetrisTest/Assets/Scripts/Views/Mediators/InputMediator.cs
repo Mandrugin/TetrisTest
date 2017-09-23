@@ -1,9 +1,12 @@
 ﻿using strange.extensions.mediation.impl;
 
-public class InputMediator : EventMediator
+public class InputMediator : Mediator
 {
     [Inject]
     public InputView inputView { get; set; }
+
+    [Inject]
+    public DestroyFieldsViewSignal destroyFieldsViewSignal { get; set; }
 
     [Inject]
     public IInputController controller { get; set; }
@@ -14,22 +17,22 @@ public class InputMediator : EventMediator
     {
         _controller = controller as ButtonsController;
 
-        inputView.dispatcher.AddListener(InputView.Events.UP_BUTTON_CLICKED, SetUp);
-        inputView.dispatcher.AddListener(InputView.Events.DOWN_BUTTON_CLICKED, SetDown);
-        inputView.dispatcher.AddListener(InputView.Events.LEFT_BUTTON_CLICKED, SetLeft);
-        inputView.dispatcher.AddListener(InputView.Events.RIGHT_BUTTON_CLICKED, SetRight);
+        inputView.upButtonClicked.AddListener(SetUp);
+        inputView.downButtonClicked.AddListener(SetDown);
+        inputView.leftButtonClicked.AddListener(SetLeft);
+        inputView.rightButtonClicked.AddListener(SetRight);
 
-        dispatcher.AddListener(NotificationType.DESTROY_FIELDS_VIEWS, OnSelfDestroy);
+        destroyFieldsViewSignal.AddListener(OnSelfDestroy);
     }
 
     public override void OnRemove()
     {
-        inputView.dispatcher.RemoveListener(InputView.Events.UP_BUTTON_CLICKED, SetUp);
-        inputView.dispatcher.RemoveListener(InputView.Events.DOWN_BUTTON_CLICKED, SetDown);
-        inputView.dispatcher.RemoveListener(InputView.Events.LEFT_BUTTON_CLICKED, SetLeft);
-        inputView.dispatcher.RemoveListener(InputView.Events.RIGHT_BUTTON_CLICKED, SetRight);
+        inputView.upButtonClicked.RemoveListener(SetUp);
+        inputView.downButtonClicked.RemoveListener(SetDown);
+        inputView.leftButtonClicked.RemoveListener(SetLeft);
+        inputView.rightButtonClicked.RemoveListener(SetRight);
 
-        dispatcher.RemoveListener(NotificationType.DESTROY_FIELDS_VIEWS, OnSelfDestroy);
+        destroyFieldsViewSignal.RemoveListener(OnSelfDestroy);
     }
 
     public void SetUp()

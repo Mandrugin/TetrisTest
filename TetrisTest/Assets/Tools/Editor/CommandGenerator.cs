@@ -35,22 +35,22 @@ public class CommandGenerator : EditorWindow
 
         if (GUILayout.Button("GAME OVER COMMAND"))
         {
-            context.dispatcher.Dispatch(NotificationType.GAME_OVER_NOTE);
+            context.injectionBinder.GetInstance<GameOverSignal>().Dispatch();
         }
 
         if (GUILayout.Button("SAVE PLAYER DATA"))
         {
-            context.dispatcher.Dispatch(NotificationType.SAVE_PLAYER_DATA);
+            context.injectionBinder.GetInstance<SavePlayerDataSignal>().Dispatch();
         }
 
         if (GUILayout.Button("LOAD PLAYER DATA"))
         {
-            context.dispatcher.Dispatch(NotificationType.LOAD_PLAYER_DATA);
+            context.injectionBinder.GetInstance<LoadPlayerDataSignal>().Dispatch();
         }
 
         if (GUILayout.Button("CLEAR PLAYER DATA"))
         {
-            context.dispatcher.Dispatch(NotificationType.CLEAR_PLAYER_DATA);
+            context.injectionBinder.GetInstance<ClearPlayerDataSignal>().Dispatch();
         }
 
         GUILayout.EndScrollView();

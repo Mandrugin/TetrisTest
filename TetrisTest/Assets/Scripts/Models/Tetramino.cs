@@ -4,8 +4,8 @@ using System.Collections.Generic;
 /// <summary>
 /// Класс представляющий понятие тетрамино
 /// </summary>
-public class Tetramino {
-
+public class Tetramino
+{
 	#region Tetramino templates
 	public const int TETRAMINO_MAX_SIZE = 4;
 	private static readonly int[,] Tetramino1 = { 

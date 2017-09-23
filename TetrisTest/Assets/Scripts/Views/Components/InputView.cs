@@ -1,19 +1,13 @@
-﻿using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine.UI;
 
 public class InputView : View
 {
-    public enum Events
-    {
-        UP_BUTTON_CLICKED,
-        DOWN_BUTTON_CLICKED,
-        LEFT_BUTTON_CLICKED,
-        RIGHT_BUTTON_CLICKED
-    }
-
-    [Inject]
-    public IEventDispatcher dispatcher { get; set; }
+    public Signal upButtonClicked = new Signal();
+    public Signal downButtonClicked = new Signal();
+    public Signal leftButtonClicked = new Signal();
+    public Signal rightButtonClicked = new Signal();
 
     public Button UpButton;
     public Button DownButton;
@@ -23,9 +17,9 @@ public class InputView : View
     [PostConstruct]
     public void PostConstruct()
     {
-        UpButton.onClick.AddListener(() => dispatcher.Dispatch(Events.UP_BUTTON_CLICKED));
-        DownButton.onClick.AddListener(() => dispatcher.Dispatch(Events.DOWN_BUTTON_CLICKED));
-        LeftButton.onClick.AddListener(() => dispatcher.Dispatch(Events.LEFT_BUTTON_CLICKED));
-        RightButton.onClick.AddListener(() => dispatcher.Dispatch(Events.RIGHT_BUTTON_CLICKED));
+        UpButton.onClick.AddListener(() => upButtonClicked.Dispatch());
+        DownButton.onClick.AddListener(() => downButtonClicked.Dispatch());
+        LeftButton.onClick.AddListener(() => leftButtonClicked.Dispatch());
+        RightButton.onClick.AddListener(() => rightButtonClicked.Dispatch());
     }
 }

@@ -7,6 +7,6 @@ public class ScoreView : EventView {
     
     public void UpdateScore(int score)
     {
-        ScoreText.text = "Score: " + score.ToString();
+        ScoreText.text = "Score: " + score;
     }
 }

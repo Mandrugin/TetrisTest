@@ -1,17 +1,13 @@
 ﻿using UnityEngine;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
 
-public class Score {
-
-    [Inject(ContextKeys.CONTEXT_DISPATCHER)]
-    public IEventDispatcher contextDispatcher { get; set; }
+public class Score
+{
+    [Inject]
+    public ScoreViewUpdateSignal scoreViewUpdateSignal { get; set; }
 
     public int score { get { return _score; } }
 
-    private int _score = 0;
-
-    public Score() {}
+    private int _score;
 
     public void SetScoreFromRemovedLines(int linesCount)
     {
@@ -34,6 +30,6 @@ public class Score {
                 break;
         }
 
-        contextDispatcher.Dispatch(NotificationType.SCORE_VIEW_UPDATE_NOTE, _score);
+        scoreViewUpdateSignal.Dispatch(_score);
     }
 }

@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
 
 public class GameController : MonoBehaviour {
 
@@ -17,19 +15,19 @@ public class GameController : MonoBehaviour {
     [Inject]
     public IInputController controller { get; set; }
 
-    [Inject(ContextKeys.CONTEXT_DISPATCHER)]
-    public IEventDispatcher contextDispatcher { get; set; }
+    [Inject]
+    public GameOverSignal gameOverSignal { get; set; }
 
     [PostConstruct]
 	public void PostConstruct() {
         controller.SetLock(false);
         StartCoroutine(Step());
-        contextDispatcher.AddListener(NotificationType.GAME_OVER_NOTE, OnGameOver);
+        gameOverSignal.AddListener(OnGameOver);
     }
 
     void OnDestroy()
     {
-        contextDispatcher.RemoveListener(NotificationType.GAME_OVER_NOTE, OnGameOver);
+        gameOverSignal.RemoveListener(OnGameOver);
     }
 
     /// <summary>
@@ -58,7 +56,7 @@ public class GameController : MonoBehaviour {
     {
         if (gameAreaModel.IsTetraminoTop)
         {
-            contextDispatcher.Dispatch(NotificationType.GAME_OVER_NOTE);
+            gameOverSignal.Dispatch();
         }
         else
         {

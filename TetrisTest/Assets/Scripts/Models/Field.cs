@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using strange.extensions.context.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
+using strange.extensions.signal.impl;
 
 /// <summary>
 /// Класс представляющий и управляющий моделью игрового поля
@@ -9,8 +8,8 @@ using strange.extensions.dispatcher.eventdispatcher.api;
 /// </summary>
 public class Field : IField
 {
-    [Inject(ContextKeys.CONTEXT_DISPATCHER)]
-    public IEventDispatcher contextDispatcher { get; set; }
+    [Inject]
+    public GetScoreLinesRemovedSignal getScoreLinesRemovedSignal { get; set; }
 
     private Tetramino tetramino;
 
@@ -21,7 +20,7 @@ public class Field : IField
     public int TetraminoNumber { get { return tetramino.Number; } }
     public bool IsTetraminoTop { get { return tetramino.posY <= Tetramino.TETRAMINO_MAX_SIZE - 1; } }
 
-    protected string updateNote = "";
+    protected Signal<int[,]> updateNote;
 
     public virtual void Init()
     {
@@ -74,7 +73,7 @@ public class Field : IField
         tetramino = new Tetramino(Vector2.zero, number);
         tetramino.posX = horizontal / 2 - tetramino.Horizontal / 2;
         tetramino.posY = Tetramino.TETRAMINO_MAX_SIZE - tetramino.Vertical;
-        contextDispatcher.Dispatch(updateNote, GetField());
+        updateNote.Dispatch(GetField());
     }
 
     public void FixTetramino()
@@ -166,7 +165,7 @@ public class Field : IField
     {
         if (Test())
         {
-            contextDispatcher.Dispatch(updateNote, GetField());
+            updateNote.Dispatch(GetField());
             return true;
         }
         else
@@ -179,7 +178,7 @@ public class Field : IField
         tetramino = tetramino.RotateTeramino();
         if (Test())
         {
-            contextDispatcher.Dispatch(updateNote, GetField());
+            updateNote.Dispatch(GetField());
             return true;
         }
         else
@@ -196,7 +195,7 @@ public class Field : IField
             tetramino.posY += 1;
         }
         tetramino.posY -= 1;
-        contextDispatcher.Dispatch(updateNote, GetField());
+        updateNote.Dispatch(GetField());
     }
 
 	public void RemoveLines() {
@@ -208,7 +207,7 @@ public class Field : IField
             linesCount += 1;
 		}
         if (linesCount > 0)
-	        contextDispatcher.Dispatch(NotificationType.GET_SCORE_LINES_REMOVED_NOTE, linesCount);
+            getScoreLinesRemovedSignal.Dispatch(linesCount);
 	}
 	
 	private int CheckLines() {

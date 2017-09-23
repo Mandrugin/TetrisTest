@@ -1,4 +1,5 @@
-﻿using strange.extensions.command.impl;
+﻿using strange.extensions.command.api;
+using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
@@ -13,6 +14,21 @@ public class AppContext : MVCSContext
     {
     }
 
+    protected override void addCoreComponents()
+    {
+        base.addCoreComponents();
+        injectionBinder.Unbind<ICommandBinder>();
+        injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
+    }
+
+    public override void Launch()
+    {
+        base.Launch();
+        //Make sure you've mapped this to a StartCommand!
+        StartSignal startSignal = (StartSignal)injectionBinder.GetInstance<StartSignal>();
+        startSignal.Dispatch();
+    }
+
     protected override void mapBindings()
     {
         MapInjectionBinder();
@@ -22,18 +38,18 @@ public class AppContext : MVCSContext
 
     private void MapCommandBinder()
     {
-        commandBinder.Bind(NotificationType.DEINIT_GAME_SCENE_NOTE).To<DeinitGameSceneCommand>();
-        commandBinder.Bind(NotificationType.INIT_GAME_FIELDS_NOTE).To<InitGameFieldsCommand>();
-        commandBinder.Bind(NotificationType.GET_SCORE_LINES_REMOVED_NOTE).To<GetScoreLinesRemovedCommand>();
-        commandBinder.Bind(NotificationType.CREATE_RECORD_VIEW_NOTE).To<CreateRecordViewCommand>();
-        commandBinder.Bind(NotificationType.GAME_OVER_NOTE).InSequence().To<CheckPlayerRecordsCommand>().To<GameOverCommand>();
-        commandBinder.Bind(NotificationType.MAIN_MENU_CRATE_NOTE).To<MainMenuCommand>();
-        commandBinder.Bind(ContextEvent.START).To<StartCommand>().Once();
+        commandBinder.Bind<DeinitGameFieldSignal>().To<DeinitGameSceneCommand>();
+        commandBinder.Bind<InitGameFieldSignal>().To<InitGameFieldsCommand>();
+        commandBinder.Bind<GetScoreLinesRemovedSignal>().To<GetScoreLinesRemovedCommand>();
+        commandBinder.Bind<CreateRecordViewSignal>().To<CreateRecordViewCommand>();
+        commandBinder.Bind<GameOverSignal>().InSequence().To<CheckPlayerRecordsCommand>().To<GameOverCommand>();
+        commandBinder.Bind<CreateMainMenuSignal>().To<MainMenuCommand>();
+        commandBinder.Bind<StartSignal>().To<StartCommand>().Once();
 
         // ...
-        commandBinder.Bind(NotificationType.SAVE_PLAYER_DATA).To<SavePlayerDataCommand>();
-        commandBinder.Bind(NotificationType.LOAD_PLAYER_DATA).To<LoadPlayerDataCommand>();
-        commandBinder.Bind(NotificationType.CLEAR_PLAYER_DATA).To<ClearPlayerDataCommand>();
+        commandBinder.Bind<SavePlayerDataSignal>().To<SavePlayerDataCommand>();
+        commandBinder.Bind<LoadPlayerDataSignal>().To<LoadPlayerDataCommand>();
+        commandBinder.Bind<ClearPlayerDataSignal>().To<ClearPlayerDataCommand>();
     }
 
     private void MapMediationBinder()
@@ -60,5 +76,14 @@ public class AppContext : MVCSContext
         injectionBinder.Bind<Score>().To<Score>().ToSingleton();
         injectionBinder.Bind<PlayerStats>().To<PlayerStats>().ToSingleton();
         injectionBinder.Bind<IDataSaver>().To<DataSaver>().ToSingleton();
+
+        // signals
+        injectionBinder.Bind<GameFieldUpdateSignal>().ToSingleton();
+        injectionBinder.Bind<NextFieldUpdateSignal>().ToSingleton();
+        injectionBinder.Bind<DestroyFieldsViewSignal>().ToSingleton();
+        injectionBinder.Bind<ScoreViewUpdateSignal>().ToSingleton();
+        injectionBinder.Bind<DestroyScoreViewSignal>().ToSingleton();
+        injectionBinder.Bind<RecordWindowClosedSignal>().ToSingleton();
+        injectionBinder.Bind<DestroyButtonsViewSignal>().ToSingleton();
     }
 }

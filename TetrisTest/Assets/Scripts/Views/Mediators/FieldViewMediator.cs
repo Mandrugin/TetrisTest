@@ -1,12 +1,20 @@
-﻿using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
 
-public class GameFieldMediator : EventMediator {
-
+public class GameFieldMediator : Mediator
+{
     [Inject]
     public FieldView View { get; set; }
     private int height;
     private int width;
+
+    [Inject]
+    public GameFieldUpdateSignal gameFieldUpdateSignal { get; set; }
+
+    [Inject]
+    public NextFieldUpdateSignal nextFieldUpdateSignal { get; set; }
+
+    [Inject]
+    public DestroyFieldsViewSignal destroyFieldsViewSignal { get; set; }
 
     public override void OnRegister()
     {
@@ -16,7 +24,7 @@ public class GameFieldMediator : EventMediator {
             height = ConstStorage.VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE;
             View.Init(height, width);
 
-            dispatcher.AddListener(NotificationType.GAME_FIELD_VIEW_UPDATE_NOTE, OnUpdate);
+            gameFieldUpdateSignal.AddListener(OnUpdate);
         }
         
         if (View.NAME == "NEXT")
@@ -25,30 +33,30 @@ public class GameFieldMediator : EventMediator {
             height = Tetramino.TETRAMINO_MAX_SIZE;
             View.Init(height, width);
 
-            dispatcher.AddListener(NotificationType.NEXT_FIELD_VIEW_UPDATE_NOTE, OnUpdate);
+            nextFieldUpdateSignal.AddListener(OnUpdate);
         }
-        
-        dispatcher.AddListener(NotificationType.DESTROY_FIELDS_VIEWS, OnSelfDestroy);
+
+        destroyFieldsViewSignal.AddListener(OnSelfDestroy);
     }
 
     public override void OnRemove()
     {
         if (View.NAME == "GAME")
         {
-            dispatcher.RemoveListener(NotificationType.GAME_FIELD_VIEW_UPDATE_NOTE, OnUpdate);
+            gameFieldUpdateSignal.RemoveListener(OnUpdate);
         }
 
         if (View.NAME == "NEXT")
         {
-            dispatcher.RemoveListener(NotificationType.NEXT_FIELD_VIEW_UPDATE_NOTE, OnUpdate);
+            nextFieldUpdateSignal.RemoveListener(OnUpdate);
         }
 
-        dispatcher.RemoveListener(NotificationType.DESTROY_FIELDS_VIEWS, OnSelfDestroy);
+        destroyFieldsViewSignal.RemoveListener(OnSelfDestroy);
     }
 
-    public void OnUpdate(IEvent e)
+    public void OnUpdate(int[,] fieldInfo)
     {
-        View.UpdateView((int[,])e.data);
+        View.UpdateView(fieldInfo);
     }
 
     private void OnSelfDestroy()

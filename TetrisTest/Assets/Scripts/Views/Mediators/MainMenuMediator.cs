@@ -1,26 +1,30 @@
 ﻿using strange.extensions.mediation.impl;
 using UnityEngine;
 
-class MainMenuMediator : EventMediator
+class MainMenuMediator : Mediator
 {
     [Inject]
     public MainMenuView view { get; set; }
 
+    [Inject]
+    public InitGameFieldSignal initGameFieldSignal { get; set; }
+
+
     public override void OnRegister()
     {
-        view.dispatcher.AddListener(MainMenuView.Events.START_BUTTON_CLICKED, OnStart);
-        view.dispatcher.AddListener(MainMenuView.Events.EXIT_BUTTON_CLICKED, OnExit);
+        view.startButtonClickedSignal.AddListener(OnStart);
+        view.exitButtonClickedSignal.AddListener(OnExit);
     }
 
     public override void OnRemove()
     {
-        view.dispatcher.RemoveListener(MainMenuView.Events.START_BUTTON_CLICKED, OnStart);
-        view.dispatcher.RemoveListener(MainMenuView.Events.EXIT_BUTTON_CLICKED, OnExit);
+        view.startButtonClickedSignal.RemoveListener(OnStart);
+        view.exitButtonClickedSignal.RemoveListener(OnExit);
     }
 
     private void OnStart()
     {
-        dispatcher.Dispatch(NotificationType.INIT_GAME_FIELDS_NOTE);
+        initGameFieldSignal.Dispatch();
         Destroy(gameObject);
     }
 

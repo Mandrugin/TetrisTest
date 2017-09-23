@@ -1,17 +1,11 @@
-﻿using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine.UI;
 
-public class MainMenuView : View {
-
-    public enum Events
-    {
-        START_BUTTON_CLICKED,
-        EXIT_BUTTON_CLICKED
-    }
-
-    [Inject]
-    public IEventDispatcher dispatcher { get; set; }
+public class MainMenuView : View
+{
+    public Signal startButtonClickedSignal = new Signal();
+    public Signal exitButtonClickedSignal = new Signal();
 
     public Button StartButton;
 	public Button ExitButton;
@@ -19,7 +13,7 @@ public class MainMenuView : View {
     protected override void Awake() {
         base.Awake();
 
-		StartButton.onClick.AddListener( () => { dispatcher.Dispatch(Events.START_BUTTON_CLICKED); } );
-		ExitButton.onClick.AddListener( () => { dispatcher.Dispatch(Events.EXIT_BUTTON_CLICKED); } );
+		StartButton.onClick.AddListener( () => { startButtonClickedSignal.Dispatch(); } );
+		ExitButton.onClick.AddListener( () => { exitButtonClickedSignal.Dispatch(); } );
 	}
 }

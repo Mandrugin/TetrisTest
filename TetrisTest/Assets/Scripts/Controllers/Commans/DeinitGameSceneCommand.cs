@@ -1,11 +1,20 @@
 ﻿using strange.extensions.command.impl;
 
-class DeinitGameSceneCommand : EventCommand
+class DeinitGameSceneCommand : Command
 {
+    [Inject]
+    public DestroyScoreViewSignal destroyScoreViewSignal { get; set; }
+
+    [Inject]
+    public DestroyFieldsViewSignal destroyFieldsViewSignal { get; set; }
+
+    [Inject]
+    public DestroyButtonsViewSignal destroyButtonsViewSignal { get; set; }
+
     public override void Execute()
     {
-        dispatcher.Dispatch(NotificationType.DESTROY_SCORE_VIEW);
-        dispatcher.Dispatch(NotificationType.DESTROY_FIELDS_VIEWS);
-        dispatcher.Dispatch(NotificationType.DESTROY_BUTTONS_VIEW);
+        destroyScoreViewSignal.Dispatch();
+        destroyFieldsViewSignal.Dispatch();
+        destroyButtonsViewSignal.Dispatch();
     }
 }

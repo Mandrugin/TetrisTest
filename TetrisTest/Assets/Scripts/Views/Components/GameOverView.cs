@@ -1,16 +1,10 @@
-﻿using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
+﻿using strange.extensions.mediation.impl;
+using strange.extensions.signal.impl;
 using UnityEngine.UI;
 
-public class GameOverView : View {
-
-    public enum Events
-    {
-        BUTTON_CLICKED
-    }
-
-    [Inject]
-    public IEventDispatcher dispatcher { get; set; }
+public class GameOverView : View
+{
+    public Signal buttonClicked = new Signal();
 
     public Text TitleText;
     public Button ActionButton;
@@ -21,8 +15,6 @@ public class GameOverView : View {
     {
         TitleText.text = "Game Over";
         ButtonText.text = "Return to menu";
-        ActionButton.onClick.AddListener(() => {
-            dispatcher.Dispatch(Events.BUTTON_CLICKED);
-        });
+        ActionButton.onClick.AddListener(() => { buttonClicked.Dispatch(); });
     }
 }

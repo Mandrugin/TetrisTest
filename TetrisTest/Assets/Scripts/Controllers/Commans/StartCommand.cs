@@ -1,10 +1,16 @@
 ﻿using strange.extensions.command.impl;
 
-public class StartCommand : EventCommand
+public class StartCommand : Command
 {
+    [Inject]
+    public LoadPlayerDataSignal loadPlayerDataSignal { get; set; }
+
+    [Inject]
+    public CreateMainMenuSignal createMainMenuSignal { get; set; }
+
     public override void Execute()
     {
-        dispatcher.Dispatch(NotificationType.LOAD_PLAYER_DATA);
-        dispatcher.Dispatch(NotificationType.MAIN_MENU_CRATE_NOTE);
+        loadPlayerDataSignal.Dispatch();
+        createMainMenuSignal.Dispatch();
     }
 }

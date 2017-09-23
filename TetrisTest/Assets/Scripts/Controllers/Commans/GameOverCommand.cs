@@ -1,7 +1,7 @@
 ﻿using strange.extensions.command.impl;
 using UnityEngine;
 
-public class GameOverCommand : EventCommand
+public class GameOverCommand : Command
 {
     static readonly string PREFAB_PATH = "GameOverCanvas";
 

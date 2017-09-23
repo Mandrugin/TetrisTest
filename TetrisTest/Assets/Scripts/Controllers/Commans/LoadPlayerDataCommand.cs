@@ -1,6 +1,6 @@
 ﻿using strange.extensions.command.impl;
 
-public class LoadPlayerDataCommand : EventCommand
+public class LoadPlayerDataCommand : Command
 {
     [Inject]
     public IDataSaver _datatSaver { get; set; }

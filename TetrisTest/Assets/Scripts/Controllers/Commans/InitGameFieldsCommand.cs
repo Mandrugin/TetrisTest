@@ -2,7 +2,7 @@
 using strange.extensions.context.api;
 using UnityEngine;
 
-class InitGameFieldsCommand : EventCommand
+class InitGameFieldsCommand : Command
 {
     private static readonly string prefabGamePath = "gameAreaCanvas";
     private static readonly string prefabNextPath = "nextAreaCanvas";

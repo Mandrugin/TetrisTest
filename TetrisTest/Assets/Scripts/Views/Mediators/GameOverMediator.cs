@@ -1,24 +1,31 @@
 ﻿using strange.extensions.mediation.impl;
 
-class GameOverMediator : EventMediator
+class GameOverMediator : Mediator
 {
     [Inject]
     public GameOverView vameOverView { get; set; }
 
+    [Inject]
+    public DeinitGameFieldSignal deinitGameFieldSignal { get; set; }
+
+    [Inject]
+    public CreateMainMenuSignal createMainMenuSignal { get; set; }
+
+
     public override void OnRegister()
     {
-        vameOverView.dispatcher.AddListener(GameOverView.Events.BUTTON_CLICKED, OnButtonClicked);
+        vameOverView.buttonClicked.AddListener(OnButtonClicked);
     }
 
     public override void OnRemove()
     {
-        vameOverView.dispatcher.RemoveListener(GameOverView.Events.BUTTON_CLICKED, OnButtonClicked);
+        vameOverView.buttonClicked.RemoveListener(OnButtonClicked);
     }
 
     private void OnButtonClicked()
     {
-        dispatcher.Dispatch(NotificationType.DEINIT_GAME_SCENE_NOTE);
+        deinitGameFieldSignal.Dispatch();
         Destroy(transform.parent.gameObject);
-        dispatcher.Dispatch(NotificationType.MAIN_MENU_CRATE_NOTE);
+        createMainMenuSignal.Dispatch();
     }
 }

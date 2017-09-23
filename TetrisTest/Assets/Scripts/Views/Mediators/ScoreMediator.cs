@@ -1,29 +1,33 @@
-﻿using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.mediation.impl;
-using UnityEngine;
+﻿using strange.extensions.mediation.impl;
 
-public class ScoreMediator : EventMediator {
-
+public class ScoreMediator : Mediator
+{
     [Inject]
     public ScoreView _viewView { get; set; }
+
+    [Inject]
+    public ScoreViewUpdateSignal scoreViewUpdateSignal { get; set; }
+
+    [Inject]
+    public DestroyScoreViewSignal destroyScoreViewSignal { get; set; }
 
     public override void OnRegister()
     {
         _viewView.UpdateScore(0);
 
-        dispatcher.AddListener(NotificationType.SCORE_VIEW_UPDATE_NOTE, OnScoreUpdate);
-        dispatcher.AddListener(NotificationType.DESTROY_SCORE_VIEW, OnSelfDestory);
+        scoreViewUpdateSignal.AddListener(OnScoreUpdate);
+        destroyScoreViewSignal.AddListener(OnSelfDestory);
     }
 
     public override void OnRemove()
     {
-        dispatcher.RemoveListener(NotificationType.SCORE_VIEW_UPDATE_NOTE, OnScoreUpdate);
-        dispatcher.RemoveListener(NotificationType.DESTROY_SCORE_VIEW, OnSelfDestory);
+        scoreViewUpdateSignal.RemoveListener(OnScoreUpdate);
+        destroyScoreViewSignal.RemoveListener(OnSelfDestory);
     }
 
-    private void OnScoreUpdate(IEvent e)
+    private void OnScoreUpdate(int score)
     {
-        _viewView.UpdateScore((int)e.data);
+        _viewView.UpdateScore(score);
     }
 
     private void OnSelfDestory()
