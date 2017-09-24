@@ -4,8 +4,6 @@ public class GameFieldMediator : Mediator
 {
     [Inject]
     public FieldView View { get; set; }
-    private int height;
-    private int width;
 
     [Inject]
     public GameFieldUpdateSignal gameFieldUpdateSignal { get; set; }
@@ -18,45 +16,25 @@ public class GameFieldMediator : Mediator
 
     public override void OnRegister()
     {
-        if (View.NAME == "GAME")
-        {
-            width = ConstStorage.HORIZONTAL_SIZE;
-            height = ConstStorage.VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE;
-            View.Init(height, width);
+        var width = ConstStorage.HORIZONTAL_SIZE;
+        var height = ConstStorage.VERTICAL_SIZE + Tetramino.TETRAMINO_MAX_SIZE;
+        View.gameField.Init(height, width);
 
-            gameFieldUpdateSignal.AddListener(OnUpdate);
-        }
-        
-        if (View.NAME == "NEXT")
-        {
-            width = Tetramino.TETRAMINO_MAX_SIZE;
-            height = Tetramino.TETRAMINO_MAX_SIZE;
-            View.Init(height, width);
+        width = Tetramino.TETRAMINO_MAX_SIZE;
+        height = Tetramino.TETRAMINO_MAX_SIZE;
+        View.nextField.Init(height, width);
 
-            nextFieldUpdateSignal.AddListener(OnUpdate);
-        }
+        gameFieldUpdateSignal.AddListener(View.gameField.UpdateView);
+        nextFieldUpdateSignal.AddListener(View.nextField.UpdateView);
 
         destroyFieldsViewSignal.AddListener(OnSelfDestroy);
     }
 
     public override void OnRemove()
     {
-        if (View.NAME == "GAME")
-        {
-            gameFieldUpdateSignal.RemoveListener(OnUpdate);
-        }
-
-        if (View.NAME == "NEXT")
-        {
-            nextFieldUpdateSignal.RemoveListener(OnUpdate);
-        }
-
+        gameFieldUpdateSignal.RemoveListener(View.gameField.UpdateView);
+        nextFieldUpdateSignal.RemoveListener(View.nextField.UpdateView);
         destroyFieldsViewSignal.RemoveListener(OnSelfDestroy);
-    }
-
-    public void OnUpdate(int[,] fieldInfo)
-    {
-        View.UpdateView(fieldInfo);
     }
 
     private void OnSelfDestroy()

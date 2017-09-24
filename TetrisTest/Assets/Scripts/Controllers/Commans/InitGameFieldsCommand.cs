@@ -5,7 +5,6 @@ using UnityEngine;
 class InitGameFieldsCommand : Command
 {
     private static readonly string prefabGamePath = "gameAreaCanvas";
-    private static readonly string prefabNextPath = "nextAreaCanvas";
     private static readonly string prefabSrocePath = "ScoreCanvas";
     private static readonly string prefabControllInputCanvas = "ControllInputCanvas";
 
@@ -15,7 +14,6 @@ class InitGameFieldsCommand : Command
     public override void Execute()
     {
         Object.Instantiate(Resources.Load<GameObject>(prefabGamePath), contextView.transform);
-        Object.Instantiate(Resources.Load<GameObject>(prefabNextPath), contextView.transform);
         Object.Instantiate(Resources.Load<GameObject>(prefabSrocePath), contextView.transform);
 #if UNITY_ANDROID
         Object.Instantiate(Resources.Load<GameObject>(prefabControllInputCanvas), contextView.transform);
